@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Rush</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./startPage.css">
+    <link rel="icon" href="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
+        type="image/x-icon" sizes="30x32">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./firebaseConfigure.js" defer></script>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="header fixed-top bg-white shadow" id="top header">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container p-2">
+                    <a class="navbar-brand fs-3" href="#">
+                        <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg" alt=""
+                            width="40" height="40" class="d-inline-block align-text-top">
+                        Kitchen Rush</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon text-danger"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link fs-5" href="#header">Home</a></li>
+                            <li class="nav-item"><a class="nav-link fs-5" href="#features">About Us</a></li>
+                            <li class="nav-item"><a class="nav-link fs-5" href="#about">Recipes</a></li>
+                            <li class="nav-item"><a class="nav-link fs-5" href="#images">Gallery</a></li>
+                            <li class="nav-item"><a class="nav-link fs-5" href="#contact"> <i
+                                        class="bi bi-telephone-fill text-warning"></i> +1(909) 235-9814</a>
+                            </li>
+                        </ul>
+                        <button class="btn btn-custom ms-3 fs-5" data-bs-toggle="modal"
+                            data-bs-target="#signInModal">Sign In</button>
+                        <button class="btn btn-custom ms-3 fs-5" data-bs-toggle="modal"
+                            data-bs-target="#signUpModal">Sign Up</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <section class="hero-section bg-secondary">
+            <div class="container text-center">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="hero-content text-white">
+                            <h1 class="hero-title fs-1">Welcome to Kitchen Rush</h1>
+                            <h3>( Quick and easy recipes for all )</h3>
+                            <p class="hero-text">
+                                Discover delicious recipes, cooking tips, and food inspiration. Join our community of
+                                food lovers today!
+                            </p>
+                            <a href="#" class="btn btn-custom mt-3 p-3 fs-5 me-2">Explore Recipes</a>
+                            <a href="#" class="btn btn-custom mt-3 p-3 fs-5 ms-2">Lets Cook</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/hero/banner-image.png"
+                            alt="Cooking" class="img-fluid w-100 rounded">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="aboutUs">
+            <section class="section text-center" id="features">
+                <h2 class="text-danger fs-3 fw-normal" style="letter-spacing: 6px;">Features</h2>
+                <h1 class="mb-5">Get a many of interesting features</h1>
+                <div class="features">
+                    <div class="feature-card d-flex flex-column align-items-center justify-content-center gap-3">
+                        <h3>AI Recipe Suggestions</h3>
+                        <p>Get personalized recipes based on the ingredients you have.</p>
+                        <img class="w-100"
+                            src="https://dmrqkbkq8el9i.cloudfront.net/Pictures/480xAny/2/2/4/107224_mindful-chef_0001.jpg"
+                            alt="">
+                    </div>
+                    <div class="feature-card d-flex flex-column align-items-center justify-content-center gap-3">
+                        <h3>Step-by-Step Cooking Guides</h3>
+                        <p>Follow interactive tutorials for the perfect dish.</p>
+                        <img class="w-100"
+                            src="https://www.shutterstock.com/image-vector/pasta-recipe-infographic-how-cook-600nw-2089834930.jpg"
+                            alt="">
+                    </div>
+                    <div class="feature-card d-flex flex-column align-items-center justify-content-center gap-3">
+                        <h3>Community Sharing</h3>
+                        <p>Share your favorite recipes and discover new ones.</p>
+                        <img class="w-100"
+                            src="https://media.istockphoto.com/id/536665840/photo/family-dinner.jpg?s=612x612&w=0&k=20&c=9dc8vWUoErfaxzTNqYt2T7sA5DyCRO5gRvF6pYU1LSI="
+                            alt="">
+                    </div>
+                    <div class="feature-card d-flex flex-column align-items-center justify-content-center gap-1">
+                        <h3>Meal Planner</h3>
+                        <p>Plan your meals for the week effortlessly.</p>
+                        <img class="w-100" src="https://honestlyadhd.com/wp-content/uploads/ADHD-meal-planner.jpg"
+                            alt="">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section container py-5" id="about">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center">
+                        <img class="img-fluid w-75"
+                            src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/cook/cook.png"
+                            alt="CookVerse">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text-danger fs-3 fw-normal" style="letter-spacing: 6px;">cook with us</h2>
+                        <h1 class="fs-1">Cooking together with the expert.</h1>
+                        <p class="fs-6">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                            doloremque
+                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+                            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+                            voluptatem</p>
+                        <p class="fs-6">
+                            The ultimate destination for food lovers! Our mission is to make cooking easy,
+                            fun, and accessible for everyone. Whether you're a beginner or a pro, CookVerse has
+                            something for you.
+                        </p>
+                        <a href="#" class="btn btn-danger mt-3 p-2 fs-5 me-2">Learn More</a>
+                    </div>
+                </div>
+            </section>
+            <section class="section" id="images">
+                <h2 class="text-center mb-3 text-danger fs-3 fw-normal" style="letter-spacing: 6px;">
+                    Our Gallery
+                </h2>
+                <h1 class="text-center mb-5 fs-1">Gallery of our cooked food</h1>
+
+                <div class="gallery w-xl-75 w-lg-50 w-md-75 w-sm-75 w-75 ">
+                    <img class="image1 rounded rounded-5"
+                        src="https://themewagon.github.io/chefs-kitchen-nextjs-free//images/Gallery/foodone.jpg"
+                        alt="Image 1">
+
+                    <img class="image2 tall rounded rounded-5"
+                        src="https://themewagon.github.io/chefs-kitchen-nextjs-free//images/Gallery/foodtwo.jpg"
+                        alt="Image 2">
+
+                    <img class="image3 wide rounded rounded-5"
+                        src="https://themewagon.github.io/chefs-kitchen-nextjs-free//images/Gallery/foodfour.jpg"
+                        alt="Image 3">
+
+                    <img class="image4 rounded rounded-5"
+                        src="https://themewagon.github.io/chefs-kitchen-nextjs-free//images/Gallery/foodthree.jpg"
+                        alt="Image 4">
+                </div>
+            </section>
+            <footer class="pt-5 pb-4" id="contact">
+                <div class="container text-center text-md-start lh-lg">
+                    <div class="row justify-content-center lh-lg">
+                        <div class="col-md-4 line-sp">
+                            <h5 class="fw-bold lh-lg">Chef's Kitchen</h5>
+                            <p class="lh-lg">Open an account in minutes, get full financial control for much longer.</p>
+                            <span class="d-inline-block bg-light rounded rounded-circle facebook"><a href=""><i
+                                        class="fa-brands fa-facebook-f text-dark fs-5 me-2 rounded rounded-circle "></i></a></span>
+                            <span class="d-inline-block bg-light rounded rounded-circle instagram"><a href=""><i
+                                        class="fa-brands fa-instagram text-dark fs-5 me-2"></i></a></span>
+                            <span class="d-inline-block bg-light rounded rounded-circle twitter"><a href=""><i
+                                        class="fa-brands fa-x-twitter text-dark fs-5"></i></a></span>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="fw-bold lh-lg">Company</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">About</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Careers</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Mobile</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Blog</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">How we work?</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="fw-bold lh-lg">Information</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Help/FAQ</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Press</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Affiliates</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Hotel owners</a></li>
+                                <li><a href="#" class="lh-lg text-dark text-decoration-none">Partners</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="fw-bold lh-lg">More</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#header" class="lh-lg text-dark text-decoration-none">Home</a></li>
+                                <li><a href="#features" class="lh-lg text-dark text-decoration-none">About Us</a></li>
+                                <li><a href="#about" class="lh-lg text-dark text-decoration-none">Recipe</a></li>
+                                <li><a href="#images" class="lh-lg text-dark text-decoration-none">Gallery</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="text-center d-flex justify-content-between">
+                        <p class="mb-0">&copy; 2025 - Chef's Kitchen. Distributed By <a href="#"
+                                class="text-dark text-decoration-none">ThemeWagon</a> and Developed by <a href="#"
+                                class="text-dark text-decoration-none">GetNextjsTemplates</a></p>
+                        <p class="mb-0"><a href="#" class="text-white text-decoration-none">Privacy policy</a> | <a
+                                href="#" class="text-dark text-decoration-none">Terms & conditions</a></p>
+                    </div>
+                </div>
+                <a href="#top" class="scroll-btn"><i class="bi bi-chevron-up"></i></a>
+            </footer>
+        </div>
+        <!-- Modal - 1  -->
+        <div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true"
+            aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content d-flex justify-content-center text-center">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <img class="text-dark"
+                            src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg" alt="Logo"
+                            class="mr-2" width="30">
+                        <h5 class="modal-title" id="signInModalLabel">Kitchen Rush</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body text-center">
+                        <div class="d-flex justify-content-around p-3">
+                            <button id="googleConfigure2" class=" btn btn-danger rounded rounded-3 p-2">
+                                Continue with Google
+                                <i class="bi bi-google"></i>
+                            </button>
+                            <button class=" btn btn-danger rounded rounded-3 p-2" id="continueAsGuest1">
+                                Continue as a Guest
+                                <i class="bi bi-person-circle"></i>
+                            </button>
+                        </div>
+                        <hr>
+                        <form>
+                            <div class="form-group text-start">
+                                <label for="EmailId" class="mb-3">Email address</label>
+                                <input type="email" class="form-control mb-3" id="EmailId" placeholder="Enter email"
+                                    required>
+                            </div>
+                            <div class="form-group text-start mb-3">
+                                <label for="passwordVerifycation" class="mb-3">Password</label>
+                                <input type="password" class="form-control mb-3" id="passwordVerifycation"
+                                    placeholder="Password" required>
+                            </div>
+                        </form>
+                        <div class="d-flex justify-content-around p-2">
+                            <button class="btn btn-primary  text-white" id="forgotPassword">Forgot Password</button>
+                            <button class="btn btn-primary text-white" id="SignIn">Sign In</button>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class=" modal-footer text-center">
+                        <small class="fs-6">Don't have an account?<button class="btn btn-secondary ms-3 fs-6"
+                                data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal - 2  -->
+        <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true"
+            aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content d-flex justify-content-center text-center">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
+                            alt="Logo" class="mr-2" width="30">
+                        <h5 class="modal-title" id="signInModalLabel">Kitchen Rush</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body text-center">
+                        <div class="d-flex justify-content-between mb-3">
+                            <button id="googleConfigure1" onclick="showToast('Logged in successfully')"
+                                class="btn btn-danger">
+                                Continue with Google
+                                <i class="bi bi-google"></i>
+                            </button>
+                            <button class="btn btn-danger rounded rounded-3 p-2" id="continueAsGuest2">
+                                Continue as a Guest
+                                <i class="bi bi-person-circle"></i>
+                            </button>
+                        </div>
+                        <form action="./dashboard.html">
+                            <div class="form-group text-start">
+                                <label for="fullname" class="mb-3">User Name</label>
+                                <input type="text" class="form-control mb-3" id="fullname" autocomplete="off"
+                                    placeholder="User Name" required>
+                            </div>
+
+                            <div class="form-group text-start">
+                                <label for="email" class="mb-3">Email address</label>
+                                <input type="email" class="form-control mb-3" id="email" autocomplete="off"
+                                    placeholder="Enter email" required>
+                            </div>
+                            <div class="form-group text-start mb-3">
+                                <label for="password" class="mb-3">Password</label>
+                                <input type="password" class="form-control mb-3" autocomplete="off" id="password"
+                                    placeholder="Password" required>
+                            </div>
+                            <button class="btn btn-primary w-50 mt-3 " type="submit" id="signup">Sign Up</button>
+                        </form>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer text-center">
+                        <small class="fs-6">Already have an account?<button class="btn btn-secondary ms-3 fs-6"
+                                data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button></small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="toast-container position-fixed top-0 end-0 p-3 rounded rounded-4">
+            <div id="guestToast" class="toast text-white" role="alert" aria-live="assertive" aria-atomic="true"
+                style="background-color: #b3a8a9ca; border-radius: 8px;">
+                <div class="toast-header p-4" style="background-color: white; color: black;">
+                    <strong class="me-auto fs-5">You are continuing as a guest.</strong>
+                </div>
+            </div>
+        </div>
+        <audio id="toastSound">
+            <source src="./mixkit-message-pop-alert-2354.mp3" type="audio/mpeg">
+        </audio>
+        <script type="module" src="./FirebaseConfiguration.js"></script>
+</body>
+
+</html>

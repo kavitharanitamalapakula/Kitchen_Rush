@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
+        type="image/x-icon" sizes="30x32">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        #recipe-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h3 {
+            color: #333;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .instruction-step {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="recipe-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the recipe ID from the URL
+            let params = new URLSearchParams(window.location.search);
+            let recipeId = params.get("id");
+
+            // Get all recipes from localStorage
+            let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+
+            // Find the recipe with the matching ID
+            let recipe = recipes.find(r => r.id == recipeId);
+
+            // If no recipe is found, show an error message
+            if (!recipe) {
+                document.getElementById("recipe-container").innerHTML = "<p>Recipe not found.</p>";
+                return;
+            }
+
+            // Display recipe details dynamically
+            let container = document.getElementById("recipe-container");
+            container.innerHTML = `
+        <h1>${recipe.title}</h1>
+        <img src="${recipe.image}" alt="${recipe.title}" style="width: 100%; max-width: 500px;">
+        <p><strong>Introduction:</strong> ${recipe.description.introduction}</p>
+        
+        <h3>Watch Video:</h3>
+        <iframe src="${recipe.description.Video}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+
+        <h3>Tips:</h3>
+        <ul>
+            ${recipe.description.tips.map(tip => `<li>${tip}</li>`).join('')}
+        </ul>
+
+        <h3>Main Ingredients:</h3>
+        <ul>
+            ${recipe.description.ingredients.main_ingredients.map(ing => `<li>${ing}</li>`).join('')}
+        </ul>
+
+        <h3>Instructions:</h3>
+        ${recipe.description.instructions[0].details.map(step => `
+            <div class="instruction-step">
+                <p>${step.text}</p>
+                <img src="${step.image}" alt="Step Image" style="width: 100%; max-width: 500px;">
+            </div>
+        `).join('')}
+    `;
+        });
+    </script>
+</body>
+
+</html>

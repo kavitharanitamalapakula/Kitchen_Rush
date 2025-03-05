@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Rush</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <link rel="stylesheet" href="./dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQ0AYlY+Em8OGFLCMCGfw5pJYtXyFfF0gSE38CI6RS0yUAE0G6r/zEd9C" crossorigin="anonymous">
+    <link rel="icon" href="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
+        type="image/x-icon" sizes="30x32">
+    <script type="module" src="./dashboard.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="menu-item cursor-pointer" id="changeHome">
+            <i class="fas fa-home"></i> <span class="menu-text">Home</span>
+        </div>
+        <div class="menu-item cursor-pointer" id="createReceips">
+            <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
+        </div>
+        <div class="menu-item cursor-pointer" id="showFavorites">
+            <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
+        </div>
+        <div class="menu-item cursor-pointer" id="changeProfile">
+            <i class="fas fa-user"></i> <span class="menu-text">User Profile</span>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div class="home-content" id="home-content">
+        <h2 id="category-title">Home</h2>
+        <input type="text" class="search-box" id="searchBar" placeholder="Search recipes..." onkeyup="searchRecipes()">
+        <div id="results"></div>
+        <div class="content-box" id="recipes-container">
+            <div class="filters" id="filters">
+            </div>
+            <div id="recipe-list">
+
+            </div>
+        </div>
+    </div>
+    <div class="recipeForm d-none" id="recipeForm">
+        <div class="card shadow formContainer w-75 m-auto" id="card">
+            <div class="card-header bg-secondary text-white text-center">
+                <h3>Create a Recipe</h3>
+            </div>
+            <div class="card-body w-75 m-auto">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Recipe Title</label>
+                        <input type="text" id="title" class="form-control" oninput="checkForm()" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ingredients</label>
+                        <textarea id="ingredients" class="form-control" rows="3" oninput="checkForm()"
+                            required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Instructions</label>
+                        <textarea id="instructions" class="form-control" rows="5" oninput="checkForm()"
+                            required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Upload Photo</label>
+                        <input type="file" id="photo" class="form-control" accept="image/*" onchange="checkForm()"
+                            required>
+                    </div>
+
+                    <div id="message"></div>
+
+                    <button type="button" class="btn btn-secondary" onclick="submitRecipe(false)">Save as Draft</button>
+                    <button type="button" id="publish" class="btn btn-success" disabled
+                        onclick="submitRecipe(true)">Publish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="profile-container d-none" id="profile-container">
+        <div class="profile-img mb-3">
+            <img id="profile-pic" src="" alt="Profile Photo">
+            <div class="mt-2">
+                <label for="fileInput" class="btn btn-outline-primary">Choose File</label>
+                <input type="file" id="fileInput" accept="image/*" onchange="previewPhoto(event)"
+                    style="display: none;">
+            </div>
+        </div>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">First Name:</label>
+                <input type="text" class="form-control" value="">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Last Name:</label>
+                <input type="text" class="form-control" value="">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Address:</label>
+                <input type="text" class="form-control" value="">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Work Phone:</label>
+                <input type="text" class="form-control" value="">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mobile Phone:</label>
+                <input type="text" class="form-control" value="">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-control" value="admin@ingeniux.com">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>
