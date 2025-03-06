@@ -8,8 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <link rel="stylesheet" href="./dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQ0AYlY+Em8OGFLCMCGfw5pJYtXyFfF0gSE38CI6RS0yUAE0G6r/zEd9C" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- integrity="sha384-rbsA2VBKQ0AYlY+Em8OGFLCMCGfw5pJYtXyFfF0gSE38CI6RS0yUAE0G6r/zEd9C" crossorigin="anonymous"> -->
     <link rel="icon" href="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
         type="image/x-icon" sizes="30x32">
     <script type="module" src="./dashboard.js" defer></script>
@@ -52,35 +52,34 @@
                 <h3>Create a Recipe</h3>
             </div>
             <div class="card-body w-75 m-auto">
-                <form>
+                <form action="">
                     <div class="mb-3">
                         <label class="form-label">Recipe Title</label>
-                        <input type="text" id="title" class="form-control" oninput="checkForm()" required>
+                        <input type="text" id="title" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Ingredients</label>
-                        <textarea id="ingredients" class="form-control" rows="3" oninput="checkForm()"
+                        <textarea id="ingredients" class="form-control" rows="3"
                             required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Instructions</label>
-                        <textarea id="instructions" class="form-control" rows="5" oninput="checkForm()"
+                        <textarea id="instructions" class="form-control" rows="5"
                             required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Upload Photo</label>
-                        <input type="file" id="photo" class="form-control" accept="image/*" onchange="checkForm()"
+                        <input type="file" id="photo" class="form-control" accept="image/*"
                             required>
                     </div>
 
                     <div id="message"></div>
 
                     <button type="button" class="btn btn-secondary" onclick="submitRecipe(false)">Save as Draft</button>
-                    <button type="button" id="publish" class="btn btn-success" disabled
-                        onclick="submitRecipe(true)">Publish</button>
+                    <button type="button" id="publish" class="btn btn-success">Publish</button>
                 </form>
             </div>
         </div>

@@ -30,8 +30,33 @@
 
         img {
             width: 100%;
+            max-width: 300px;
+            /* Smaller default image */
             border-radius: 8px;
             margin-top: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Full-screen overlay */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .fullscreen-overlay img {
+            max-width: 50%;
+            max-height: 70%;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         ul {
@@ -54,53 +79,73 @@
 <body>
     <div id="recipe-container"></div>
 
+    <!-- Fullscreen Image Overlay -->
+    <div class="fullscreen-overlay" id="image-overlay">
+        <img id="overlay-img" src="" alt="Full View">
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the recipe ID from the URL
-            let params = new URLSearchParams(window.location.search);
-            let recipeId = params.get("id");
+    document.addEventListener("DOMContentLoaded", function () {
+    let params = new URLSearchParams(window.location.search);
+    let recipeId = params.get("id");
 
-            // Get all recipes from localStorage
-            let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+    if (!recipeId) {
+        document.getElementById("recipe-container").innerHTML = "<p>Recipe ID not provided.</p>";
+        return;
+    }
 
-            // Find the recipe with the matching ID
-            let recipe = recipes.find(r => r.id == recipeId);
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+    let recipe = recipes.find(r => r.id == recipeId);
 
-            // If no recipe is found, show an error message
-            if (!recipe) {
-                document.getElementById("recipe-container").innerHTML = "<p>Recipe not found.</p>";
-                return;
-            }
+    if (!recipe) {
+        document.getElementById("recipe-container").innerHTML = "<p>Recipe not found.</p>";
+        return;
+    }
 
-            // Display recipe details dynamically
-            let container = document.getElementById("recipe-container");
-            container.innerHTML = `
+    // ✅ Handle undefined description structure
+    let description = recipe.description || {}; 
+    let video = description.Video || "";
+    let tips = description.tips || [];
+    let mainIngredients = (description.ingredients && description.ingredients.main_ingredients) || [];
+    let instructions = (description.instructions && description.instructions[0] && description.instructions[0].details) || [];
+
+    let container = document.getElementById("recipe-container");
+    container.innerHTML = `
         <h1>${recipe.title}</h1>
-        <img src="${recipe.image}" alt="${recipe.title}" style="width: 100%; max-width: 500px;">
-        <p><strong>Introduction:</strong> ${recipe.description.introduction}</p>
+        <img src="${recipe.image || 'default.jpg'}" alt="${recipe.title}" class="clickable-image">
+        <p><strong>Introduction:</strong> ${description.introduction || "No introduction available."}</p>        
         
-        <h3>Watch Video:</h3>
-        <iframe src="${recipe.description.Video}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-
+        ${video ? `<h3>Watch Video:</h3><iframe src="${video}" width="560" height="315" frameborder="0" allowfullscreen></iframe>` : ""}
+        
         <h3>Tips:</h3>
-        <ul>
-            ${recipe.description.tips.map(tip => `<li>${tip}</li>`).join('')}
-        </ul>
-
+        <ul>${tips.length > 0 ? tips.map(tip => `<li>${tip}</li>`).join('') : "<li>No tips available.</li>"}</ul>
+        
         <h3>Main Ingredients:</h3>
-        <ul>
-            ${recipe.description.ingredients.main_ingredients.map(ing => `<li>${ing}</li>`).join('')}
-        </ul>
-
+        <ul>${mainIngredients.length > 0 ? mainIngredients.map(ing => `<li>${ing}</li>`).join('') : "<li>No ingredients available.</li>"}</ul>
+        
         <h3>Instructions:</h3>
-        ${recipe.description.instructions[0].details.map(step => `
+        ${instructions.length > 0 ? instructions.map(step => `
             <div class="instruction-step">
-                <p>${step.text}</p>
-                <img src="${step.image}" alt="Step Image" style="width: 100%; max-width: 500px;">
+                <p>${step.text || "No step description."}</p>
+                <img src="${step.image || 'default-step.jpg'}" alt="Step Image" class="clickable-image">
             </div>
-        `).join('')}
+        `).join('') : "<p>No instructions available.</p>"}
     `;
+
+    let overlay = document.getElementById("image-overlay");
+    let overlayImg = document.getElementById("overlay-img");
+
+    document.querySelectorAll(".clickable-image").forEach(img => {
+        img.addEventListener("click", function () {
+            overlay.style.display = "flex";
+            overlayImg.src = this.src;
         });
+    });
+
+    overlay.addEventListener("click", function () {
+        overlay.style.display = "none";
+    });
+});
     </script>
 </body>
 

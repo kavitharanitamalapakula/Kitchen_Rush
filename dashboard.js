@@ -1,6 +1,8 @@
+const url = "https://salty-purple-kryptops.glitch.me/AllRecipes"
+
 async function getData() {
     try {
-        let response = await fetch("https://salty-purple-kryptops.glitch.me/AllRecipes");
+        let response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -12,15 +14,13 @@ async function getData() {
         console.error("Error fetching data:", error);
     }
 }
-
 // -------------------------------------------------------------------changeHome Start-------------------------------------
 // displayData - DOM
 let recipesContainer = document.getElementById("recipe-list");
-let favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes")) || []; // Store in localStorage
-
+let favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
 function displayData(filterProducts = null) {
-    let categorytitle = document.getElementById("category-title"); // Ensure it's defined
-    let searchBar = document.getElementById("searchBar"); // Ensure it's defined
+    let categorytitle = document.getElementById("category-title");
+    let searchBar = document.getElementById("searchBar");
 
     if (!categorytitle || !searchBar) {
         console.error("Category title or search bar is missing from the DOM.");
@@ -49,7 +49,7 @@ function displayData(filterProducts = null) {
     Recipes.forEach(obj => {
         let item = document.createElement("div");
         item.className = "itemCard";
-        let isFav = favoriteRecipes.some(fav => fav.id === obj.id); // Check if it's in favorites
+        let isFav = favoriteRecipes.some(fav => fav.id === obj.id);
 
         item.innerHTML = `
             <img src="${obj.image}" class="card-img-top" alt="">
@@ -71,8 +71,6 @@ function displayData(filterProducts = null) {
                 heartIcon.style.color = "red";
                 favoriteRecipes.push(obj);
             }
-
-            // Save to localStorage so it persists
             localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
         });
         item.querySelector(".card-title").addEventListener("click", function () {
@@ -83,7 +81,6 @@ function displayData(filterProducts = null) {
 
     recipesContainer.appendChild(recipeItem);
 }
-
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("changeHome").addEventListener("click", function () {
         let Recieps = JSON.parse(localStorage.getItem("AllRecipes"));
@@ -104,9 +101,54 @@ document.getElementById("createReceips").addEventListener("click", function () {
     let recipeForm = document.getElementById("recipeForm")
     recipeForm.className = "d-block container *none"
     recipesContainer.appendChild(recipeForm)
+});
+document.getElementById("publish").addEventListener("click", async () => {
+    const title = document.getElementById("title").value.trim();
+    const ingredients = document.getElementById("ingredients").value.trim().split("\n");
+    const instructions = document.getElementById("instructions").value.trim().split("\n");
+    const photoInput = document.getElementById("photo");
+    const file = photoInput.files[0];
 
+    if (!title || ingredients.length === 0 || instructions.length === 0 || !file) {
+        alert("Please fill out all fields and upload an image.");
+        return;
+    }
+    const imageBase64 = await toBase64(file);
+
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: title,
+            ingredients: ingredients,
+            instructions: instructions,
+            image: imageBase64
+        })
+    };
+    let response = await fetch(url, options);
+
+    if (response.ok) {
+        alert("Recipe added successfully!");
+        document.getElementById("title").value = "";
+        document.getElementById("ingredients").value = "";
+        document.getElementById("instructions").value = "";
+        document.getElementById("photo").value = "";
+        document.getElementById("publish").disabled = true;
+    } else {
+        alert("Error adding recipe. Please try again.");
+    }
 });
 
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 // ----------------------------------------------------------------------createReceips End ------------------------------------------
 
 // -----------------------------------------------------------------------Favorite Recipes Start --------------------------------------
@@ -121,13 +163,12 @@ document.getElementById("showFavorites").addEventListener("click", function () {
         recipesContainer.innerHTML = `<p class="text-center text-muted">No favorite recipes found.</p>`;
         return;
     }
-
     let row = document.createElement("div");
-    row.className = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"; // Responsive grid
+    row.className = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"; 
 
     favRecipes.forEach(obj => {
         let item = document.createElement("div");
-        item.className = "col favrecipe"; // Bootstrap grid column
+        item.className = "col favrecipe";
         item.innerHTML = `
             <div class="card shadow-sm border-0">
                 <img src="${obj.image}" class="card-img-top img-fluid" alt="Recipe Image">
@@ -151,7 +192,6 @@ document.getElementById("changeProfile").addEventListener("click", function () {
     searchBar.className = "d-none"
     recipesContainer.appendChild(profileContainer)
 })
-
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
 
@@ -186,7 +226,6 @@ function filterData(category) {
     let filtered = recipes.filter(obj => obj.category === category);
     displayData(filtered);
 }
-
 // search using debounce
 
 let allRecipes = [];
@@ -194,12 +233,11 @@ let allRecipes = [];
 // Function to fetch recipes from an external JSON file
 async function fetchRecipes() {
     try {
-        const response = await fetch("https://salty-purple-kryptops.glitch.me/AllRecipes"); // Ensure the file is in the same directory
+        const response = await fetch(url); 
         if (!response.ok) {
             throw new Error("Failed to load recipes.json");
         }
         allRecipes = await response.json();
-        console.log("Recipes Loaded:", allRecipes); // Debugging
     } catch (error) {
         console.error("Error loading recipes:", error);
     }
@@ -216,14 +254,15 @@ function debounce(func, delay) {
 
 // Search function to filter recipes
 let resultsContainer = document.getElementById("results");
+allRecipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
 
 function searchRecipes() {
     let searchInput = document.getElementById("searchBar").value.toLowerCase();
     if (searchInput === "") {
-        resultsContainer.style.display = "none"; // Hide results if search is empty
+        resultsContainer.style.display = "none"; 
         return;
     } else {
-        resultsContainer.style.display = "block"; // Show results when searching
+        resultsContainer.style.display = "block";
     }
 
     if (allRecipes.length === 0) {
@@ -237,7 +276,6 @@ function searchRecipes() {
 
     ShowData(filteredRecipes);
 }
-
 // Function to display search results
 function ShowData(filteredRecipes) {
     let resultsContainer = document.getElementById("results");
@@ -261,15 +299,8 @@ function ShowData(filteredRecipes) {
         resultsContainer.appendChild(item);
     });
 }
-
-// Attach event listener to search bar
 const searchBar = document.getElementById("searchBar");
 searchBar.addEventListener("keyup", debounce(searchRecipes, 500));
-
-// Load recipes from JSON and only allow searching after it's loaded
-fetchRecipes().then(() => {
-    console.log("Recipe data is ready for searching.");
-});
 
 getData()
 
