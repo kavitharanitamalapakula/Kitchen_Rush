@@ -190,3 +190,48 @@ footer p a:hover {
 .toast-container.show {
     transform: translateX(0);
 }
+
+#messageBox {
+    display: none;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    padding: 10px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Success Message */
+.success {
+    color: #1B5E20;
+    /* Dark Green */
+    /* border-top: 2px solid #1B5E20;
+    border-bottom: 2px solid #1B5E20; */
+}
+
+/* Error Message */
+.error {
+    color: #B71C1C;
+    /* Dark Red */
+    /* border-top: 2px solid #B71C1C;
+    border-bottom: 2px solid #B71C1C; */
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#messageBox.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}

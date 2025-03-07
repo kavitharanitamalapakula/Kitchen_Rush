@@ -94,13 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
 let categorytitle = document.getElementById("category-title")
 document.getElementById("createReceips").addEventListener("click", function () {
     recipesContainer.innerHTML = "";
-    resultsContainer.className = "d-none"
-    btnContainer.innerHTML = ""
-    searchBar.className = "d-none"
-    categorytitle.className = "d-none"
-    let recipeForm = document.getElementById("recipeForm")
-    recipeForm.className = "d-block container *none"
-    recipesContainer.appendChild(recipeForm)
+    btnContainer.innerHTML = "";
+    searchBar.classList.add("d-none");
+    resultsContainer.classList.add("d-none");
+    categorytitle.classList.add("d-none");
+    profileContainer.classList.add("d-none");
+    recipeForm.classList.remove("d-none");
+    recipesContainer.appendChild(recipeForm);
 });
 document.getElementById("publish").addEventListener("click", async () => {
     const title = document.getElementById("title").value.trim();
@@ -164,7 +164,7 @@ document.getElementById("showFavorites").addEventListener("click", function () {
         return;
     }
     let row = document.createElement("div");
-    row.className = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"; 
+    row.className = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4";
 
     favRecipes.forEach(obj => {
         let item = document.createElement("div");
@@ -190,8 +190,10 @@ document.getElementById("changeProfile").addEventListener("click", function () {
     recipesContainer.innerHTML = "";
     btnContainer.innerHTML = ""
     searchBar.className = "d-none"
-    recipesContainer.appendChild(profileContainer)
-})
+    profileContainer.classList.remove("d-none");
+    recipesContainer.appendChild(profileContainer);
+});
+
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
 
@@ -233,7 +235,7 @@ let allRecipes = [];
 // Function to fetch recipes from an external JSON file
 async function fetchRecipes() {
     try {
-        const response = await fetch(url); 
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error("Failed to load recipes.json");
         }
@@ -259,7 +261,7 @@ allRecipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
 function searchRecipes() {
     let searchInput = document.getElementById("searchBar").value.toLowerCase();
     if (searchInput === "") {
-        resultsContainer.style.display = "none"; 
+        resultsContainer.style.display = "none";
         return;
     } else {
         resultsContainer.style.display = "block";

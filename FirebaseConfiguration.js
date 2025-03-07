@@ -22,6 +22,76 @@ const auth = getAuth(app);
 // --------------------------------
 
 
+// const submit = document.getElementById("signup");
+
+// submit.addEventListener("click", function (event) {
+//     event.preventDefault();
+
+//     const fullName = document.getElementById("fullname").value;
+//     const email = document.getElementById("email").value;
+//     const password = document.getElementById("password").value;
+
+//     const fullNamePattern = /^[A-Za-z\s]{8,16}$/; // Fixed regex (previously incorrect)
+//     const emailPattern = /^[a-z\d]+@(gmail|yahoo|outlook)\.(com|in|org|co)$/;
+//     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[$%&#@]).{8,16}$/;
+
+//     if (!fullNamePattern.test(fullName)) {
+//         alert("Full Name must be between 8 to 16 characters.");
+//         return;
+//     }
+//     if (!emailPattern.test(email)) {
+//         alert("Invalid email format! Please use a valid email (e.g., user@gmail.com).");
+//         return;
+//     }
+//     if (!passwordPattern.test(password)) {
+//         alert(
+//             "Invalid password format! Password must contain at least:\n" +
+//             "- 1 lowercase letter\n" +
+//             "- 1 uppercase letter\n" +
+//             "- 1 digit\n" +
+//             "- 1 special character ($, %, &, #, @)\n" +
+//             "- Length between 8-16 characters."
+//         );
+//         return;
+//     }
+
+//     createUserWithEmailAndPassword(auth, email, password) // Fixed incorrect parameter (fullName removed)
+//         .then((userCredential) => {
+//             const user = userCredential.user;
+
+//             set(ref(database, "users/" + user.uid), {
+//                 email: email,
+//                 password: password
+//             })
+//                 .then(() => {
+//                     console.log("User data successfully written to database!");
+//                     alert("Account created successfully!");
+
+//                     setTimeout(() => {
+//                         const signUpModalEl = document.getElementById("signupModal");
+//                         if (signUpModalEl) {
+//                             const signUpModal = bootstrap.Modal.getInstance(signUpModalEl);
+//                             if (signUpModal) signUpModal.hide();
+//                         }
+//                         const signInModalEl = document.getElementById("signInModal");
+//                         if (signInModalEl) {
+//                             const signInModal = new bootstrap.Modal(signInModalEl);
+//                             signInModal.show();
+//                         }
+//                         // window.location.href = "./dashboard.html"; // Redirect after delay
+//                     }, 1000); // 1-second delay to ensure alert is seen
+//                 })
+//                 .catch((dbError) => {
+//                     console.error("Database write error: ", dbError);
+//                     alert("Failed to save user data. Please check your database rules.");
+//                 });
+//         })
+//         .catch((error) => {
+//             console.error("Error: ", error.message);
+//             alert("Error: " + error.message);
+//         });
+// });
+
 const submit = document.getElementById("signup");
 
 submit.addEventListener("click", function (event) {
@@ -30,32 +100,35 @@ submit.addEventListener("click", function (event) {
     const fullName = document.getElementById("fullname").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const messageBox = document.getElementById("messageBox");
 
-    const fullNamePattern = /^[A-Za-z\s]{8,16}$/; // Fixed regex (previously incorrect)
+    function showMessage(message, type) {
+        messageBox.innerText = message;
+        messageBox.className = type; // Assigns class (success or error)
+        messageBox.style.display = "block"; // Make visible
+        setTimeout(() => {
+            messageBox.style.display = "none";
+        }, 3000);
+    }
+
+    const fullNamePattern = /^[A-Za-z\s]{8,16}$/;
     const emailPattern = /^[a-z\d]+@(gmail|yahoo|outlook)\.(com|in|org|co)$/;
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[$%&#@]).{8,16}$/;
 
     if (!fullNamePattern.test(fullName)) {
-        alert("Full Name must be between 8 to 16 characters.");
+        showMessage("Please enter a valid full name (8-16 letters only).", "error");
         return;
     }
     if (!emailPattern.test(email)) {
-        alert("Invalid email format! Please use a valid email (e.g., user@gmail.com).");
+        showMessage("Invalid email format! Use Gmail, Yahoo, or Outlook.", "error");
         return;
     }
     if (!passwordPattern.test(password)) {
-        alert(
-            "Invalid password format! Password must contain at least:\n" +
-            "- 1 lowercase letter\n" +
-            "- 1 uppercase letter\n" +
-            "- 1 digit\n" +
-            "- 1 special character ($, %, &, #, @)\n" +
-            "- Length between 8-16 characters."
-        );
+        showMessage("Weak password!at least 8 characters mix of letters, numbers & special symbols.", "error");
         return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password) // Fixed incorrect parameter (fullName removed)
+    createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
 
@@ -64,9 +137,7 @@ submit.addEventListener("click", function (event) {
                 password: password
             })
                 .then(() => {
-                    console.log("User data successfully written to database!");
-                    alert("Account created successfully!");
-
+                    showMessage("Your account has been successfully created! 🎉", "success");
                     setTimeout(() => {
                         const signUpModalEl = document.getElementById("signupModal");
                         if (signUpModalEl) {
@@ -78,17 +149,16 @@ submit.addEventListener("click", function (event) {
                             const signInModal = new bootstrap.Modal(signInModalEl);
                             signInModal.show();
                         }
-                        // window.location.href = "./dashboard.html"; // Redirect after delay
-                    }, 1000); // 1-second delay to ensure alert is seen
+                    }, 1000);
                 })
                 .catch((dbError) => {
                     console.error("Database write error: ", dbError);
-                    alert("Failed to save user data. Please check your database rules.");
+                    showMessage("Failed to save user data. Please check your database rules.", "error");
                 });
         })
         .catch((error) => {
             console.error("Error: ", error.message);
-            alert("Error: " + error.message);
+            showMessage("Oops! " + error.message, "error");
         });
 });
 
