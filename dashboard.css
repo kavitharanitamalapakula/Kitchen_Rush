@@ -25,7 +25,7 @@ body {
     width: 220px;
 }
 
-.menu-item {
+.menu-item1 {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -33,11 +33,11 @@ body {
     transition: 0.3s;
 }
 
-.menu-item:hover {
+.menu-item1:hover {
     background: #444;
 }
 
-.menu-item i {
+.menu-item1 i {
     font-size: 20px;
     width: 30px;
     text-align: center;
@@ -322,3 +322,55 @@ body {
     object-fit: cover;
     border: 3px solid #ddd;
 }
+.profile-card {
+    width: 500px;
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 15px;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #292929;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.menu-item:hover {
+    background: #3a3a3a;
+}
+
+.menu-item i {
+    transition: transform 0.3s ease;
+}
+
+.menu-item.active i {
+    transform: rotate(180deg);
+}
+
+.form-container {
+    display: none;
+    padding: 10px;
+    background: #333;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+#fullName,#email,#recipeName, #recipeDescription {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+}
+

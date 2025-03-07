@@ -194,6 +194,61 @@ document.getElementById("changeProfile").addEventListener("click", function () {
     recipesContainer.appendChild(profileContainer);
 });
 
+function toggleForm(formId) {
+    const form = document.getElementById(formId);
+    const menuItem = form.previousElementSibling;
+
+    // Close other open forms
+    document.querySelectorAll(".form-container").forEach(el => {
+        if (el.id !== formId) {
+            el.style.display = "none";
+            el.previousElementSibling.classList.remove("active");
+        }
+    });
+
+    // Toggle current form
+    if (form.style.display === "block") {
+        form.style.display = "none";
+        menuItem.classList.remove("active");
+    } else {
+        form.style.display = "block";
+        menuItem.classList.add("active");
+    }
+}
+
+function saveChanges() {
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const saveMessage = document.getElementById("saveMessage");
+
+    if (fullName.trim() === "" || email.trim() === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    saveMessage.style.display = "block";
+    setTimeout(() => saveMessage.style.display = "none", 2000);
+}
+
+function saveRecipe() {
+    const recipeName = document.getElementById("recipeName").value;
+    const recipeDescription = document.getElementById("recipeDescription").value;
+    const recipeMessage = document.getElementById("recipeMessage");
+
+    if (recipeName.trim() === "" || recipeDescription.trim() === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    recipeMessage.style.display = "block";
+    setTimeout(() => recipeMessage.style.display = "none", 2000);
+}
+
+function showActivity() {
+    const activityLog = document.getElementById("activityLog");
+    activityLog.innerHTML = "You last edited your profile 5 minutes ago!";
+}
+
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
 

@@ -20,16 +20,16 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="menu-item cursor-pointer" id="changeHome">
+        <div class="menu-item1 cursor-pointer" id="changeHome">
             <i class="fas fa-home"></i> <span class="menu-text">Home</span>
         </div>
-        <div class="menu-item cursor-pointer" id="createReceips">
+        <div class="menu-item1 cursor-pointer" id="createReceips">
             <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
         </div>
-        <div class="menu-item cursor-pointer" id="showFavorites">
+        <div class="menu-item1 cursor-pointer" id="showFavorites">
             <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
         </div>
-        <div class="menu-item cursor-pointer" id="changeProfile">
+        <div class="menu-item1 cursor-pointer" id="changeProfile">
             <i class="fas fa-user"></i> <span class="menu-text">User Profile</span>
         </div>
     </div>
@@ -84,44 +84,37 @@
         </div>
     </div>
     <div class="profile-container d-none" id="profile-container">
-        <div class="profile-img mb-3">
-            <img id="profile-pic" src="" alt="Profile Photo">
-            <div class="mt-2">
-                <label for="fileInput" class="btn btn-outline-primary">Choose File</label>
-                <input type="file" id="fileInput" accept="image/*" onchange="previewPhoto(event)"
-                    style="display: none;">
+        <div class="profile-card">
+            <div class="menu-item" onclick="toggleForm('editProfileForm')">
+                <span><i class="fas fa-user-edit"></i> Edit Profile</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
-        </div>
-        <form>
-            <div class="mb-3">
-                <label class="form-label">First Name:</label>
-                <input type="text" class="form-control" value="">
+            <div id="editProfileForm" class="form-container">
+                <input type="text" id="fullName" placeholder="Full Name">
+                <input type="email" id="email" placeholder="Email">
+                <button onclick="saveChanges()">Save Changes</button>
+                <p id="saveMessage" style="color: green; display: none;">Profile saved successfully!</p>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Last Name:</label>
-                <input type="text" class="form-control" value="">
+            
+            <div class="menu-item" onclick="toggleForm('manageRecipesForm')">
+                <span><i class="fas fa-book"></i> Manage Recipes</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Address:</label>
-                <input type="text" class="form-control" value="">
+            <div id="manageRecipesForm" class="form-container">
+                <input type="text" id="recipeName" placeholder="Recipe Name">
+                <textarea id="recipeDescription" placeholder="Recipe Description"></textarea>
+                <button onclick="saveRecipe()">Save Recipe</button>
+                <p id="recipeMessage" style="color: green; display: none;">Recipe saved successfully!</p>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Work Phone:</label>
-                <input type="text" class="form-control" value="">
+            <div class="menu-item" onclick="toggleForm('viewActivityForm')">
+                <span><i class="fas fa-chart-line"></i> View Activity</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Mobile Phone:</label>
-                <input type="text" class="form-control" value="">
+            <div id="viewActivityForm" class="form-container">
+                <button onclick="showActivity()">Check Activity</button>
+                <div id="activityLog">No activity yet.</div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" class="form-control" value="admin@ingeniux.com">
-            </div>
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </form>
+        </div>        
     </div>
 
 </body>

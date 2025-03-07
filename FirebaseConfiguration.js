@@ -21,77 +21,6 @@ const auth = getAuth(app);
 //  SignUp
 // --------------------------------
 
-
-// const submit = document.getElementById("signup");
-
-// submit.addEventListener("click", function (event) {
-//     event.preventDefault();
-
-//     const fullName = document.getElementById("fullname").value;
-//     const email = document.getElementById("email").value;
-//     const password = document.getElementById("password").value;
-
-//     const fullNamePattern = /^[A-Za-z\s]{8,16}$/; // Fixed regex (previously incorrect)
-//     const emailPattern = /^[a-z\d]+@(gmail|yahoo|outlook)\.(com|in|org|co)$/;
-//     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[$%&#@]).{8,16}$/;
-
-//     if (!fullNamePattern.test(fullName)) {
-//         alert("Full Name must be between 8 to 16 characters.");
-//         return;
-//     }
-//     if (!emailPattern.test(email)) {
-//         alert("Invalid email format! Please use a valid email (e.g., user@gmail.com).");
-//         return;
-//     }
-//     if (!passwordPattern.test(password)) {
-//         alert(
-//             "Invalid password format! Password must contain at least:\n" +
-//             "- 1 lowercase letter\n" +
-//             "- 1 uppercase letter\n" +
-//             "- 1 digit\n" +
-//             "- 1 special character ($, %, &, #, @)\n" +
-//             "- Length between 8-16 characters."
-//         );
-//         return;
-//     }
-
-//     createUserWithEmailAndPassword(auth, email, password) // Fixed incorrect parameter (fullName removed)
-//         .then((userCredential) => {
-//             const user = userCredential.user;
-
-//             set(ref(database, "users/" + user.uid), {
-//                 email: email,
-//                 password: password
-//             })
-//                 .then(() => {
-//                     console.log("User data successfully written to database!");
-//                     alert("Account created successfully!");
-
-//                     setTimeout(() => {
-//                         const signUpModalEl = document.getElementById("signupModal");
-//                         if (signUpModalEl) {
-//                             const signUpModal = bootstrap.Modal.getInstance(signUpModalEl);
-//                             if (signUpModal) signUpModal.hide();
-//                         }
-//                         const signInModalEl = document.getElementById("signInModal");
-//                         if (signInModalEl) {
-//                             const signInModal = new bootstrap.Modal(signInModalEl);
-//                             signInModal.show();
-//                         }
-//                         // window.location.href = "./dashboard.html"; // Redirect after delay
-//                     }, 1000); // 1-second delay to ensure alert is seen
-//                 })
-//                 .catch((dbError) => {
-//                     console.error("Database write error: ", dbError);
-//                     alert("Failed to save user data. Please check your database rules.");
-//                 });
-//         })
-//         .catch((error) => {
-//             console.error("Error: ", error.message);
-//             alert("Error: " + error.message);
-//         });
-// });
-
 const submit = document.getElementById("signup");
 
 submit.addEventListener("click", function (event) {
@@ -100,12 +29,22 @@ submit.addEventListener("click", function (event) {
     const fullName = document.getElementById("fullname").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const messageBox = document.getElementById("messageBox");
+    const messageBox = document.getElementById("messageBox1");
+    // function playSound(type) {
+    //     const audio = new Audio(type === "success" ? "success.mp3" : "error.mp3");
+    //     audio.play();
+    // }
 
+    function playSound(type) {
+        const filePath = type === "success" ? "audios/success.mp3" : "audios/error.mp3";    
+        const audio = new Audio(filePath);
+        audio.play().catch(error => console.error("Audio play error:", error));
+    }
     function showMessage(message, type) {
         messageBox.innerText = message;
-        messageBox.className = type; // Assigns class (success or error)
-        messageBox.style.display = "block"; // Make visible
+        messageBox.className = type;
+        messageBox.style.display = "block"; 
+        playSound(type); 
         setTimeout(() => {
             messageBox.style.display = "none";
         }, 3000);
@@ -124,7 +63,7 @@ submit.addEventListener("click", function (event) {
         return;
     }
     if (!passwordPattern.test(password)) {
-        showMessage("Weak password!at least 8 characters mix of letters, numbers & special symbols.", "error");
+        showMessage("Weak password! Use 8+ chars, letters, numbers & symbols.", "error");
         return;
     }
 
@@ -174,6 +113,18 @@ const demoCredentials = {
 };
 
 const loginButton = document.getElementById("SignIn");
+const messageBox = document.getElementById("messageBox2");
+
+function showMessage(message, type) {
+    messageBox.textContent = message;
+    messageBox.className = type; // Apply success or error class
+    messageBox.style.display = "block";
+
+    setTimeout(() => {
+        messageBox.style.display = "none";
+    }, 3000); // Hide after 3 seconds
+}
+
 loginButton.addEventListener("click", function (event) {
     event.preventDefault();
 
@@ -183,39 +134,38 @@ loginButton.addEventListener("click", function (event) {
     const emailPattern = /^[a-z\d]+@(gmail|yahoo|outlook)+\.(com|in|org|co)$/;
 
     if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address (e.g., user@gmail.com).");
+        showMessage("Please enter a valid email address (e.g., user@gmail.com).", "error");
         return;
     }
 
     if (!password) {
-        alert("Please enter your password.");
+        showMessage("Please enter your password.", "error");
         return;
     }
 
     if (email === demoCredentials.email && password === demoCredentials.password) {
-        alert("Login successful with demo credentials!");
-        window.location.href = "./dashboard.html";
+        showMessage("Login successful with demo credentials!", "success");
+        setTimeout(() => (window.location.href = "./dashboard.html"), 1500);
         return;
     }
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            alert("Login successful!");
-            window.location.href = "./dashboard.html";
+            showMessage("Login successful!", "success");
+            setTimeout(() => (window.location.href = "./dashboard.html"), 1500);
         })
         .catch((error) => {
             const errorCode = error.code;
 
             if (errorCode === "auth/user-not-found") {
-                alert("User not found. Please register first.");
+                showMessage("User not found. Please register first.", "error");
             } else if (errorCode === "auth/wrong-password") {
-                alert("Password is incorrect. Please try again.");
+                showMessage("Password is incorrect. Please try again.", "error");
             } else {
-                alert("An error occurred: " + error.message);
+                showMessage("An error occurred: " + error.message, "error");
             }
         });
 });
-
 
 // ----------------------------
 // continue with Google

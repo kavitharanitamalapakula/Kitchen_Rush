@@ -249,6 +249,7 @@
                                     placeholder="Password" required>
                             </div>
                         </form>
+                        <div id="messageBox2" class="hidden"></div>
                         <div class="d-flex justify-content-around p-2">
                             <button class="btn btn-primary  text-white" id="forgotPassword">Forgot Password</button>
                             <button class="btn btn-primary text-white" id="SignIn">Sign In</button>
@@ -306,7 +307,7 @@
                                 <input type="password" class="form-control mb-3" autocomplete="off" id="password"
                                     placeholder="Password" required>
                             </div>
-                            <div id="messageBox" class="hidden"></div>
+                            <div id="messageBox1" class="hidden"></div>
                             <button class="btn btn-primary w-50 mt-3 " type="submit" id="signup">Sign Up</button>
                         </form>
                     </div>
@@ -321,15 +322,23 @@
 
         </div>
         <div class="toast-container position-fixed top-0 end-0 p-3 rounded rounded-4">
-            <div id="guestToast" class="toast text-white" role="alert" aria-live="assertive" aria-atomic="true"
-                style="background-color: #b3a8a9ca; border-radius: 8px;">
-                <div class="toast-header p-4" style="background-color: white; color: black;">
-                    <strong class="me-auto fs-5">You are continuing as a guest.</strong>
+            <div id="guestToast" class="toast text-white  d-flex align-items-center" role="alert" aria-live="assertive"
+                aria-atomic="true"
+                style="background-color: #141414; border-radius: 12px; padding: 10px; display: flex;">
+                <div class="icon-container d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #007bff, #e91e63);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 13l4 4L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="toast-header p-1" style="background-color: #141414; color: white;">
+                    <strong class="me-auto fs-6">You are continuing as a guest.</strong>
                 </div>
             </div>
         </div>
         <audio id="toastSound">
-            <source src="./mixkit-message-pop-alert-2354.mp3" type="audio/mpeg">
+            <source src="./audios/short-success.mp3" type="audio/mpeg">
         </audio>
         <script type="module" src="./FirebaseConfiguration.js"></script>
 </body>
