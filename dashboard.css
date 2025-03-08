@@ -10,8 +10,6 @@ body {
     height: 100vh;
     background: #f3f3f3;
 }
-
-/* Sidebar */
 .sidebar {
     width: 60px;
     background: #222;
@@ -51,8 +49,6 @@ body {
 .sidebar:hover .menu-text {
     display: inline;
 }
-
-/* Main content */
 .home-content {
     flex: 1;
     padding: 20px;
@@ -113,9 +109,6 @@ body {
 .hidden {
     display: none;
 }
-
-
-/* my own  */
 .home-content {
     overflow: scroll;
 }
@@ -232,7 +225,6 @@ body {
     background: #f8f8f8;
 }
 
-/* Recipe Image */
 .recipe-item img {
     width: 40px;
     height: 40px;
@@ -240,7 +232,6 @@ body {
     border-radius: 5px;
 }
 
-/* Recipe Title */
 .recipe-title {
     text-decoration: none;
     color: #333;
@@ -248,7 +239,6 @@ body {
     flex-grow: 1;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .search-container {
         max-width: 90%;

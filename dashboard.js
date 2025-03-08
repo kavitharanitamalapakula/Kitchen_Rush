@@ -16,6 +16,7 @@ async function getData() {
 }
 // -------------------------------------------------------------------changeHome Start-------------------------------------
 // displayData - DOM
+
 let recipesContainer = document.getElementById("recipe-list");
 let favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
 function displayData(filterProducts = null) {
@@ -26,7 +27,6 @@ function displayData(filterProducts = null) {
         console.error("Category title or search bar is missing from the DOM.");
         return;
     }
-
     categorytitle.className = "d-block";
     searchBar.className = "d-flex m-3 p-2";
     recipesContainer.innerHTML = "";
@@ -84,6 +84,7 @@ function displayData(filterProducts = null) {
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("changeHome").addEventListener("click", function () {
         let Recieps = JSON.parse(localStorage.getItem("AllRecipes"));
+        createBtn()
         displayData(Recieps)
     });
 });
@@ -114,18 +115,32 @@ document.getElementById("publish").addEventListener("click", async () => {
         return;
     }
     const imageBase64 = await toBase64(file);
+    let newRecipe = {
+        id: Date.now(),
+        title: title,
+        description: {
+            introduction: "Coming Soon",
+            Video: "Coming Soon",
+            tips: ["Coming Soon"],
+            ingredients: {
+                main_ingredients: ingredients.length > 0 ? ingredients : ["Coming Soon"]
+            }
+        },
+        instructions: instructions.length > 0 
+            ? [{ details: instructions.map(step => ({ text: step.trim(), image: "Coming Soon" })) }] 
+            : [{ details: [{ text: "Coming Soon", image: "Coming Soon" }] }],
+        category: "userRecipes",
+        image: imageBase64 || "Coming Soon"
+    };
+
+    console.log("Submitting Recipe:", JSON.stringify(newRecipe, null, 2));
 
     let options = {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            title: title,
-            ingredients: ingredients,
-            instructions: instructions,
-            image: imageBase64
-        })
+        body: JSON.stringify(newRecipe)
     };
     let response = await fetch(url, options);
 
@@ -164,7 +179,7 @@ document.getElementById("showFavorites").addEventListener("click", function () {
         return;
     }
     let row = document.createElement("div");
-    row.className = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4";
+    row.className = "row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3";
 
     favRecipes.forEach(obj => {
         let item = document.createElement("div");
@@ -189,6 +204,7 @@ let profileContainer = document.getElementById("profile-container")
 document.getElementById("changeProfile").addEventListener("click", function () {
     recipesContainer.innerHTML = "";
     btnContainer.innerHTML = ""
+    categorytitle.classList.add("d-none");
     searchBar.className = "d-none"
     profileContainer.classList.remove("d-none");
     recipesContainer.appendChild(profileContainer);
@@ -198,7 +214,6 @@ function toggleForm(formId) {
     const form = document.getElementById(formId);
     const menuItem = form.previousElementSibling;
 
-    // Close other open forms
     document.querySelectorAll(".form-container").forEach(el => {
         if (el.id !== formId) {
             el.style.display = "none";
@@ -206,7 +221,6 @@ function toggleForm(formId) {
         }
     });
 
-    // Toggle current form
     if (form.style.display === "block") {
         form.style.display = "none";
         menuItem.classList.remove("active");
@@ -283,11 +297,9 @@ function filterData(category) {
     let filtered = recipes.filter(obj => obj.category === category);
     displayData(filtered);
 }
-// search using debounce
 
 let allRecipes = [];
 
-// Function to fetch recipes from an external JSON file
 async function fetchRecipes() {
     try {
         const response = await fetch(url);
@@ -300,7 +312,6 @@ async function fetchRecipes() {
     }
 }
 
-// Debounce function to optimize search performance
 function debounce(func, delay) {
     let timer;
     return function (...args) {
@@ -309,7 +320,6 @@ function debounce(func, delay) {
     };
 }
 
-// Search function to filter recipes
 let resultsContainer = document.getElementById("results");
 allRecipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
 
@@ -333,7 +343,6 @@ function searchRecipes() {
 
     ShowData(filteredRecipes);
 }
-// Function to display search results
 function ShowData(filteredRecipes) {
     let resultsContainer = document.getElementById("results");
     resultsContainer.innerHTML = "";
