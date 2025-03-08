@@ -17,21 +17,31 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="menu-item1 cursor-pointer" id="changeHome">
-            <i class="fas fa-home"></i> <span class="menu-text">Home</span>
+    <header class="d-flex justify-content-between align-items-center p-3 bg-light shadow fixed-top w-100">
+        <div class="d-flex align-items-center">
+            <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg" alt="Kitchen Rush Logo" height="40">
+            <h3 class="ms-2">Kitchen Rush</h3>
         </div>
-        <div class="menu-item1 cursor-pointer" id="createReceips">
-            <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
-        </div>
-        <div class="menu-item1 cursor-pointer" id="showFavorites">
-            <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
-        </div>
-        <div class="menu-item1 cursor-pointer" id="changeProfile">
-            <i class="fas fa-user"></i> <span class="menu-text">User Profile</span>
-        </div>
-    </div>
+        
+        <aside class="sidebar d-flex align-items-center position-relative">
+            <div class="menu-item1 cursor-pointer" id="changeHome">
+                <i class="fas fa-home"></i> <span class="menu-text">Home</span>
+            </div>
+            <div class="menu-item1 cursor-pointer" id="createReceips">
+                <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
+            </div>
+            <div class="menu-item1 cursor-pointer" id="showFavorites">
+                <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
+            </div>
+            <div class="menu-item1 cursor-pointer" id="changeProfile">
+                <i class="fas fa-user"></i> <span class="menu-text">User Profile</span>
+            </div>
+            <button class="btn btn-danger" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+    </header>
+
     <!-- Main Content -->
     <div class="home-content" id="home-content">
         <h2 id="category-title">Home</h2>
@@ -58,20 +68,17 @@
 
                     <div class="mb-3">
                         <label class="form-label">Ingredients</label>
-                        <textarea id="ingredients" class="form-control" rows="3"
-                            required></textarea>
+                        <textarea id="ingredients" class="form-control" rows="3" required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Instructions</label>
-                        <textarea id="instructions" class="form-control" rows="5"
-                            required></textarea>
+                        <textarea id="instructions" class="form-control" rows="5" required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Upload Photo</label>
-                        <input type="file" id="photo" class="form-control" accept="image/*"
-                            required>
+                        <input type="file" id="photo" class="form-control" accept="image/*" required>
                     </div>
 
                     <div id="message"></div>
@@ -88,13 +95,19 @@
                 <span><i class="fas fa-user-edit"></i> Edit Profile</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
+            <div id="editProfileForm" class="form-container" style="display: none;">
+                <input type="text" id="fullName" placeholder="Full Name">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="password" placeholder="New Password">
+                <button onclick="saveChanges()">Save Changes</button>
+            </div>
             <div id="editProfileForm" class="form-container">
                 <input type="text" id="fullName" placeholder="Full Name">
                 <input type="email" id="email" placeholder="Email">
                 <button onclick="saveChanges()">Save Changes</button>
                 <p id="saveMessage" style="color: green; display: none;">Profile saved successfully!</p>
             </div>
-            
+
             <div class="menu-item" onclick="toggleForm('manageRecipesForm')">
                 <span><i class="fas fa-book"></i> Manage Recipes</span>
                 <i class="fas fa-chevron-down"></i>
@@ -113,9 +126,41 @@
                 <button onclick="showActivity()">Check Activity</button>
                 <div id="activityLog">No activity yet.</div>
             </div>
-        </div>        
+        </div>
     </div>
+    <script>
+        document.getElementById("settingsBtn").addEventListener("click", function() {
+            document.getElementById("settingsMenu").classList.toggle("active");
+        });
+    </script>
 
+    <!-- CSS for Dropdown -->
+    <style>
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 10px;
+            z-index: 1000;
+        }
+        .settings-menu a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: black;
+        }
+        .settings-menu a:hover {
+            background: #f0f0f0;
+        }
+        .settings-menu.active {
+            display: block;
+        }
+    </style>
 </body>
 
 </html>

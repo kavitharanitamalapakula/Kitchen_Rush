@@ -27,7 +27,7 @@ function displayData(filterProducts = null) {
         console.error("Category title or search bar is missing from the DOM.");
         return;
     }
-    categorytitle.className = "d-block";
+    categorytitle.className = "d-none";
     searchBar.className = "d-flex m-3 p-2";
     recipesContainer.innerHTML = "";
     profileContainer.className = "d-none"
@@ -209,60 +209,15 @@ document.getElementById("changeProfile").addEventListener("click", function () {
     profileContainer.classList.remove("d-none");
     recipesContainer.appendChild(profileContainer);
 });
-
 function toggleForm(formId) {
     const form = document.getElementById(formId);
-    const menuItem = form.previousElementSibling;
-
-    document.querySelectorAll(".form-container").forEach(el => {
-        if (el.id !== formId) {
-            el.style.display = "none";
-            el.previousElementSibling.classList.remove("active");
-        }
-    });
-
-    if (form.style.display === "block") {
-        form.style.display = "none";
-        menuItem.classList.remove("active");
+    
+    if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block"; // Show form
     } else {
-        form.style.display = "block";
-        menuItem.classList.add("active");
+        form.style.display = "none";  // Hide form
     }
 }
-
-function saveChanges() {
-    const fullName = document.getElementById("fullName").value;
-    const email = document.getElementById("email").value;
-    const saveMessage = document.getElementById("saveMessage");
-
-    if (fullName.trim() === "" || email.trim() === "") {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    saveMessage.style.display = "block";
-    setTimeout(() => saveMessage.style.display = "none", 2000);
-}
-
-function saveRecipe() {
-    const recipeName = document.getElementById("recipeName").value;
-    const recipeDescription = document.getElementById("recipeDescription").value;
-    const recipeMessage = document.getElementById("recipeMessage");
-
-    if (recipeName.trim() === "" || recipeDescription.trim() === "") {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    recipeMessage.style.display = "block";
-    setTimeout(() => recipeMessage.style.display = "none", 2000);
-}
-
-function showActivity() {
-    const activityLog = document.getElementById("activityLog");
-    activityLog.innerHTML = "You last edited your profile 5 minutes ago!";
-}
-
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
 

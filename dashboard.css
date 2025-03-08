@@ -4,25 +4,12 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 body {
     display: flex;
     height: 100vh;
     background: #f3f3f3;
+    padding-top: 70px;
 }
-.sidebar {
-    width: 60px;
-    background: #222;
-    color: white;
-    padding: 10px;
-    overflow: hidden;
-    transition: width 0.3s;
-}
-
-.sidebar:hover {
-    width: 220px;
-}
-
 .menu-item1 {
     display: flex;
     align-items: center;
@@ -30,30 +17,10 @@ body {
     padding: 12px;
     transition: 0.3s;
 }
-
-.menu-item1:hover {
-    background: #444;
-}
-
-.menu-item1 i {
-    font-size: 20px;
-    width: 30px;
-    text-align: center;
-}
-
-.menu-text {
-    display: none;
-    white-space: nowrap;
-}
-
-.sidebar:hover .menu-text {
-    display: inline;
-}
 .home-content {
     flex: 1;
     padding: 20px;
 }
-
 .search-box {
     width: 100%;
     padding: 10px;
@@ -62,20 +29,16 @@ body {
     border-radius: 5px;
     outline: blue;
 }
-
 .search-box:focus {
     border-color: #6750ff;
     /* Coral color */
     box-shadow: 0 0 10px rgba(80, 103, 255, 0.5);
 }
-
-
 .filters {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
-
 .filter-btn {
     padding: 10px 15px;
     border: none;
@@ -83,24 +46,20 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-
 .filter-btn.active {
     background: #222;
     color: white;
 }
-
 .filter-btn:hover {
     background: #444;
     color: white;
 }
-
 .content-box {
     background: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .recipe-item {
     padding: 10px;
     border-bottom: 1px solid #ddd;
@@ -109,6 +68,7 @@ body {
 .hidden {
     display: none;
 }
+
 .home-content {
     overflow: scroll;
 }
@@ -185,14 +145,12 @@ body {
     }
 }
 
-
 .search-container {
     position: relative;
     width: 100%;
     max-width: 400px;
     margin: auto;
 }
-
 
 #searchBar {
     width: 100%;
@@ -312,6 +270,7 @@ body {
     object-fit: cover;
     border: 3px solid #ddd;
 }
+
 .profile-card {
     width: 500px;
     background: #1e1e1e;
@@ -354,7 +313,10 @@ body {
     margin-top: 5px;
 }
 
-#fullName,#email,#recipeName, #recipeDescription {
+#fullName,
+#email,
+#recipeName,
+#recipeDescription {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
@@ -363,4 +325,3 @@ body {
     background: #444;
     color: white;
 }
-
