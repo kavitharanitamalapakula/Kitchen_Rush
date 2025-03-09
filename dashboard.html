@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top">
         <div class="container-fluid p-2">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
@@ -30,7 +30,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <aside class="navbar-nav ms-auto sidebar d-flex position-relative">
+                <aside class="navbar-nav ms-auto sidebar d-flex position-relative pe-2">
                     <div class="menu-item1 cursor-pointer" id="changeHome">
                         <i class="fas fa-home"></i> <span class="menu-text">Home</span>
                     </div>
@@ -64,7 +64,7 @@
         <input type="text" class="search-box" id="searchBar" placeholder="Search recipes..." onkeyup="searchRecipes()">
         <div id="results"></div>
         <div class="content-box" id="recipes-container">
-            <div class="filters" id="filters">
+            <div class="filters d-flex flex-wrap gap-2 justify-content-center p-2" id="filters">
             </div>
             <div id="recipe-list">
             </div>
@@ -72,10 +72,10 @@
     </div>
     <div class="recipeForm d-none" id="recipeForm">
         <div class="card shadow formContainer w-75 m-auto" id="card">
-            <div class="card-header bg-secondary text-white text-center">
-                <h3>Create a Recipe</h3>
+            <div class="card-header bg-info text-white text-center">
+                <h4>Create a Recipe</h4>
             </div>
-            <div class="card-body m-auto">
+            <div class="card-body w-75 w-lg-75 m-auto">
                 <form action="">
                     <div class="mb-3">
                         <label class="form-label">Recipe Title</label>

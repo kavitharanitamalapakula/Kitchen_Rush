@@ -49,7 +49,7 @@ function displayData(filterProducts = null) {
 
     Recipes.forEach(obj => {
         let item = document.createElement("div");
-        item.className = "itemCard";
+        item.className = "itemCard shadow";
         let isFav = favoriteRecipes.some(fav => fav.id === obj.id);
 
         item.innerHTML = `
@@ -359,7 +359,7 @@ function createBtn() {
     categories.forEach(category => {
         let button = document.createElement("button");
         button.innerText = category;
-        button.className = "btn btn-secondary";
+        button.className = "btn btn-secondary fs-6";
         button.addEventListener("click", () => filterData(category));
         btnContainer.append(button, btn);
     });
