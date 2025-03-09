@@ -266,38 +266,13 @@ document.getElementById("searchRecipe").addEventListener("click", function () {
             <div class="card-body anchorTag">
                 <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
             </div>
-                <button class="edit-btn" onclick="editRecipe('${recipe.title}')">Edit</button>
-                <button class="delete-btn" onclick="deleteRecipe('${recipe.title}')">Delete</button>
+                <button class="delete-btn mb-3" onclick="deleteRecipe('${recipe.id}')">Delete</button>
             </div>
         `;
         recipeList.appendChild(recipeItem);
     });
 });
 
-function loadRecipes() {
-    const recipeList2 = document.getElementById("recipe-list2"); 
-    recipeList2.innerHTML = "";
-
-    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
-
-    if (recipes.length === 0) {
-        console.warn("⚠️ No recipes found in localStorage.");
-        return;
-    }
-
-    recipes.forEach((recipe) => {
-        let recipeItem2 = document.createElement("div");
-        recipeItem2.classList.add("recipe-item");
-        recipeItem2.innerHTML = `
-            <h3>${recipe.title}</h3>
-            <p>${recipe.description}</p>
-            <button onclick="editRecipe('${recipe.title}')">Edit</button>
-            <button onclick="deleteRecipe('${recipe.title}')">Delete</button>
-        `;
-        recipeList2.appendChild(recipeItem2);
-    });
-
-}
 function editRecipe(title) {
     let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
     let recipe = recipes.find(r => r.title === title);
@@ -337,18 +312,32 @@ function searchRecipeAgain() {
             <div class="card-body anchorTag">
                 <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
             </div>
-                <button class="edit-btn" onclick="editRecipe('${recipe.title}')">Edit</button>
                 <button class="delete-btn" onclick="deleteRecipe('${recipe.title}')">Delete</button>
             </div>
         `;
         recipeList.appendChild(recipeItem);
     });
 }
-function deleteRecipe(title) {
-    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
-    let updatedRecipes = recipes.filter(r => r.title !== title);
-    localStorage.setItem("AllRecipes", JSON.stringify(updatedRecipes));
-    searchRecipeAgain()
+async function deleteRecipe(id) {
+    if (!confirm("Are you sure you want to delete this recipe?")) return;
+
+    try {
+        let response = await fetch(`${url}/${id}`, { method: "DELETE" });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+        let updatedRecipes = recipes.filter(recipe => recipe.id !== id);
+        localStorage.setItem("AllRecipes", JSON.stringify(updatedRecipes));
+
+        alert("Recipe deleted successfully!");
+        displayData(updatedRecipes);
+    } catch (error) {
+        console.error("Error deleting recipe:", error);
+        alert("Failed to delete recipe. Please try again.");
+    }
 }
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
@@ -460,6 +449,56 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
     localStorage.removeItem("user");
     window.location.href = "startPage.html";
 });
+
+function logActivity(action) {
+    let activities = JSON.parse(localStorage.getItem("userActivities")) || [];
+    let timestamp = new Date().toLocaleString();
+    activities = activities.filter(activity => activity.action !== action);
+    activities.unshift({ action, timestamp });
+    localStorage.setItem("userActivities", JSON.stringify(activities));
+}
+document.addEventListener("click", function (event) {
+    let element = event.target;
+    let action = element.innerText.trim() || element.tagName;
+
+    if (action) {
+        logActivity(`Clicked on "${action}"`);
+    }
+});
+function displayActivity() {
+    let activities = JSON.parse(localStorage.getItem("userActivities")) || [];
+    let activityContainer = document.getElementById("view-activity");
+
+    if (!activityContainer) return;
+
+    if (activities.length === 0) {
+        activityContainer.innerHTML = `
+            <h2>View Activity</h2>
+            <p>No recent activity.</p>
+        `;
+        return;
+    }
+
+    let activityList = activities
+        .map(item => `<li>${item.timestamp} - ${item.action}</li>`)
+        .join("");
+
+    activityContainer.innerHTML = `
+        <h2>View Activity</h2>
+        <ul>${activityList}</ul>
+    `;
+}
+document.querySelectorAll(".tab-btn").forEach(button => {
+    button.addEventListener("click", function () {
+        let targetSection = this.getAttribute("data-target");
+        logActivity(`Visited ${targetSection.replace("-", " ")}`);
+
+        if (targetSection === "view-activity") {
+            displayActivity();
+        }
+    });
+});
+window.addEventListener("load", displayActivity);
 
 
 getData()

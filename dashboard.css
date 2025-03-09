@@ -11,6 +11,7 @@ body {
     background: #f3f3f3;
     padding-top: 70px;
 }
+
 /* header */
 .menu-item1 {
     display: flex;
@@ -393,6 +394,7 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px gray;
 }
+
 .recipe-card {
     background: #fff;
     padding: 15px;
@@ -406,7 +408,8 @@ body {
     margin: 0 auto;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
     padding: 8px 12px;
     border: none;
     cursor: pointer;
@@ -426,4 +429,95 @@ body {
     margin: auto;
     background-color: #dc3545;
     color: white;
+}
+
+/* General Styling */
+#manage-recipes {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading */
+#manage-recipes h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Description */
+#manage-recipes p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Search Input */
+#searchTitle {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+#searchTitle:focus {
+    border-color: #ff6600;
+}
+
+/* Search Button */
+#searchRecipe {
+    background-color: #ff6600;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: 0.3s;
+}
+
+#searchRecipe:hover {
+    background-color: #e65c00;
+}
+
+/* Recipe List Container */
+#recipe-list2 {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Individual Recipe Item */
+.recipe-item {
+    background: #f8f8f8;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+
+.recipe-item:hover {
+    background: #ececec;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #searchTitle {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #searchRecipe {
+        width: 100%;
+    }
 }
