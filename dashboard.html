@@ -13,34 +13,50 @@
         type="image/x-icon" sizes="30x32">
     <script type="module" src="./dashboard.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body>
-    <header class="d-flex justify-content-between align-items-center p-3 bg-light shadow fixed-top w-100">
-        <div class="d-flex align-items-center">
-            <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg" alt="Kitchen Rush Logo" height="40">
-            <h3 class="ms-2">Kitchen Rush</h3>
-        </div>
-        
-        <aside class="sidebar d-flex align-items-center position-relative">
-            <div class="menu-item1 cursor-pointer" id="changeHome">
-                <i class="fas fa-home"></i> <span class="menu-text">Home</span>
-            </div>
-            <div class="menu-item1 cursor-pointer" id="createReceips">
-                <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
-            </div>
-            <div class="menu-item1 cursor-pointer" id="showFavorites">
-                <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
-            </div>
-            <div class="menu-item1 cursor-pointer" id="changeProfile">
-                <i class="fas fa-user"></i> <span class="menu-text">User Profile</span>
-            </div>
-            <button class="btn btn-danger" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Logout
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+        <div class="container-fluid p-2">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://themewagon.github.io/chefs-kitchen-nextjs-free/images/logo/Logo.svg"
+                    alt="Kitchen Rush Logo" height="40">
+                <h3 class="ms-2 mb-0">Kitchen Rush</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-        </aside>
-    </header>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <aside class="navbar-nav ms-auto sidebar d-flex position-relative">
+                    <div class="menu-item1 cursor-pointer" id="changeHome">
+                        <i class="fas fa-home"></i> <span class="menu-text">Home</span>
+                    </div>
+                    <div class="menu-item1 cursor-pointer" id="createReceips">
+                        <i class="fas fa-plus"></i> <span class="menu-text">Create Recipes</span>
+                    </div>
+                    <div class="menu-item1 cursor-pointer" id="showFavorites">
+                        <i class="fas fa-heart"></i> <span class="menu-text">Favorite Recipes</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary me-3 " id="settingsBtn">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                        <button class="btn btn-danger" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                    <div id="settingsMenu" class="settings-menu">
+                        <button class="tab-btn btn changeProfile" data-target="edit-profile">Edit Profile</button>
+                        <button class="tab-btn btn changeProfile" data-target="manage-recipes">Manage Recipes</button>
+                        <button class="tab-btn btn changeProfile" data-target="view-activity">View Activity</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
     <div class="home-content" id="home-content">
@@ -59,7 +75,7 @@
             <div class="card-header bg-secondary text-white text-center">
                 <h3>Create a Recipe</h3>
             </div>
-            <div class="card-body w-75 m-auto">
+            <div class="card-body m-auto">
                 <form action="">
                     <div class="mb-3">
                         <label class="form-label">Recipe Title</label>
@@ -89,78 +105,68 @@
             </div>
         </div>
     </div>
-    <div class="profile-container d-none" id="profile-container">
-        <div class="profile-card">
-            <div class="menu-item" onclick="toggleForm('editProfileForm')">
-                <span><i class="fas fa-user-edit"></i> Edit Profile</span>
-                <i class="fas fa-chevron-down"></i>
+    <div class="profile-container w-50 d-none" id="profile-container">
+        <div class="profile-content">
+            <div id="edit-profile" class="content-section d-none">
+                <h2>Edit Profile</h2>
+                <form class="profile-form p-3 border rounded bg-light">
+                    <div class="mb-3 text-center">
+                        <label for="profile-pic" class="form-label fw-bold">Profile Picture</label>
+                        <div class="d-flex justify-content-center">
+                            <img id="profile-image-preview" src="https://via.placeholder.com/100"
+                                class="rounded-circle border" width="100" height="100" alt="Profile Picture">
+                        </div>
+                        <input type="file" id="profile-pic" class="form-control mt-2" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" class="form-control" placeholder="Enter your username">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                </form>
+
             </div>
-            <div id="editProfileForm" class="form-container" style="display: none;">
-                <input type="text" id="fullName" placeholder="Full Name">
-                <input type="email" id="email" placeholder="Email">
-                <input type="password" id="password" placeholder="New Password">
-                <button onclick="saveChanges()">Save Changes</button>
-            </div>
-            <div id="editProfileForm" class="form-container">
-                <input type="text" id="fullName" placeholder="Full Name">
-                <input type="email" id="email" placeholder="Email">
-                <button onclick="saveChanges()">Save Changes</button>
-                <p id="saveMessage" style="color: green; display: none;">Profile saved successfully!</p>
+          
+            <div id="manage-recipes" class="content-section d-none">
+                <h2>Manage Recipes</h2>
+                <p>Here you can add, edit, or delete recipes.</p>
+                <input type="text" id="searchTitle" placeholder="Search Recipe by Title">
+                <button id="searchRecipe">Search</button>
+                <div id="recipe-list2"></div> <!-- Recipe list will be displayed here -->
             </div>
 
-            <div class="menu-item" onclick="toggleForm('manageRecipesForm')">
-                <span><i class="fas fa-book"></i> Manage Recipes</span>
-                <i class="fas fa-chevron-down"></i>
+            <!-- Edit Modal -->
+            <div id="editModal" class="modal d-none">
+                <div class="modal-content">
+                    <h3>Edit Recipe</h3>
+                    <input type="text" id="editTitle" placeholder="Recipe Title">
+                    <textarea id="editDescription" placeholder="Recipe Description"></textarea>
+                    <button onclick="saveEdit()">Save</button>
+                    <button onclick="closeModal()">Cancel</button>
+                </div>
             </div>
-            <div id="manageRecipesForm" class="form-container">
-                <input type="text" id="recipeName" placeholder="Recipe Name">
-                <textarea id="recipeDescription" placeholder="Recipe Description"></textarea>
-                <button onclick="saveRecipe()">Save Recipe</button>
-                <p id="recipeMessage" style="color: green; display: none;">Recipe saved successfully!</p>
-            </div>
-            <div class="menu-item" onclick="toggleForm('viewActivityForm')">
-                <span><i class="fas fa-chart-line"></i> View Activity</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div id="viewActivityForm" class="form-container">
-                <button onclick="showActivity()">Check Activity</button>
-                <div id="activityLog">No activity yet.</div>
+
+            <div id="view-activity" class="content-section d-none">
+                <h2>View Activity</h2>
+                <p>Check your recent activity here.</p>
             </div>
         </div>
     </div>
     <script>
-        document.getElementById("settingsBtn").addEventListener("click", function() {
+        document.getElementById("settingsBtn").addEventListener("click", function () {
             document.getElementById("settingsMenu").classList.toggle("active");
         });
     </script>
+    <script src="./dashboard.js"></script> <!-- Ensure it's loaded -->
 
-    <!-- CSS for Dropdown -->
-    <style>
-        .settings-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 200px;
-            padding: 10px;
-            z-index: 1000;
-        }
-        .settings-menu a {
-            display: block;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: black;
-        }
-        .settings-menu a:hover {
-            background: #f0f0f0;
-        }
-        .settings-menu.active {
-            display: block;
-        }
-    </style>
 </body>
 
 </html>

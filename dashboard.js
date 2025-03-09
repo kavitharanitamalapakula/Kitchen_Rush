@@ -14,6 +14,7 @@ async function getData() {
         console.error("Error fetching data:", error);
     }
 }
+
 // -------------------------------------------------------------------changeHome Start-------------------------------------
 // displayData - DOM
 
@@ -93,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ----------------------------------------------------------------------createReceips start-----------------------------------------
 let categorytitle = document.getElementById("category-title")
+let recipeForm = document.getElementById("recipeForm");
 document.getElementById("createReceips").addEventListener("click", function () {
     recipesContainer.innerHTML = "";
     btnContainer.innerHTML = "";
@@ -126,14 +128,12 @@ document.getElementById("publish").addEventListener("click", async () => {
                 main_ingredients: ingredients.length > 0 ? ingredients : ["Coming Soon"]
             }
         },
-        instructions: instructions.length > 0 
-            ? [{ details: instructions.map(step => ({ text: step.trim(), image: "Coming Soon" })) }] 
+        instructions: instructions.length > 0
+            ? [{ details: instructions.map(step => ({ text: step.trim(), image: "Coming Soon" })) }]
             : [{ details: [{ text: "Coming Soon", image: "Coming Soon" }] }],
         category: "userRecipes",
         image: imageBase64 || "Coming Soon"
     };
-
-    console.log("Submitting Recipe:", JSON.stringify(newRecipe, null, 2));
 
     let options = {
         method: "POST",
@@ -201,22 +201,154 @@ document.getElementById("showFavorites").addEventListener("click", function () {
 // -----------------------------------------------------------------------Favorite Recipes End --------------------------------------
 //------------------------------------------------------------------------user profile start-----------------------------------------------
 let profileContainer = document.getElementById("profile-container")
-document.getElementById("changeProfile").addEventListener("click", function () {
-    recipesContainer.innerHTML = "";
-    btnContainer.innerHTML = ""
-    categorytitle.classList.add("d-none");
-    searchBar.className = "d-none"
-    profileContainer.classList.remove("d-none");
-    recipesContainer.appendChild(profileContainer);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".tab-btn");
+    const sections = document.querySelectorAll(".content-section");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            sections.forEach(section => section.classList.add("d-none"));
+            const targetId = this.getAttribute("data-target");
+            document.getElementById(targetId).classList.remove("d-none");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
 });
+
+document.querySelectorAll(".changeProfile").forEach(button => {
+    button.addEventListener("click", function () {
+        let targetSection = this.getAttribute("data-target");
+        recipesContainer.innerHTML = "";
+        btnContainer.innerHTML = "";
+        categorytitle.classList.add("d-none");
+        searchBar.classList.add("d-none");
+        profileContainer.classList.remove("d-none");
+        recipesContainer.appendChild(profileContainer);
+    });
+});
+
 function toggleForm(formId) {
     const form = document.getElementById(formId);
-    
-    if (form.style.display === "none" || form.style.display === "") {
-        form.style.display = "block"; // Show form
-    } else {
-        form.style.display = "none";  // Hide form
+    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+}
+
+
+// manage recipe
+
+document.getElementById("searchRecipe").addEventListener("click", function () {
+    let searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+
+    const recipeList = document.getElementById("recipe-list2");
+    recipeList.innerHTML = "";
+
+    if (searchTitle === "") {
+        console.warn("⚠️ Search field is empty.");
+        recipeList.innerHTML = "<p>Please enter a recipe title to search.</p>";
+        return;
     }
+
+    let filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchTitle));
+
+    if (filteredRecipes.length === 0) {
+        recipeList.innerHTML = "<p>No matching recipes found.</p>";
+        console.warn("⚠️ No recipes matched the search query.");
+        return;
+    }
+    filteredRecipes.forEach((recipe) => {
+        let recipeItem = document.createElement("div");
+        recipeItem.classList.add("recipe-card");
+        recipeItem.innerHTML = `
+            <div class="card">
+                <img src="${recipe.image}" class="card-img-top" alt="">
+            <div class="card-body anchorTag">
+                <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
+            </div>
+                <button class="edit-btn" onclick="editRecipe('${recipe.title}')">Edit</button>
+                <button class="delete-btn" onclick="deleteRecipe('${recipe.title}')">Delete</button>
+            </div>
+        `;
+        recipeList.appendChild(recipeItem);
+    });
+});
+
+function loadRecipes() {
+    const recipeList2 = document.getElementById("recipe-list2"); 
+    recipeList2.innerHTML = "";
+
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+
+    if (recipes.length === 0) {
+        console.warn("⚠️ No recipes found in localStorage.");
+        return;
+    }
+
+    recipes.forEach((recipe) => {
+        let recipeItem2 = document.createElement("div");
+        recipeItem2.classList.add("recipe-item");
+        recipeItem2.innerHTML = `
+            <h3>${recipe.title}</h3>
+            <p>${recipe.description}</p>
+            <button onclick="editRecipe('${recipe.title}')">Edit</button>
+            <button onclick="deleteRecipe('${recipe.title}')">Delete</button>
+        `;
+        recipeList2.appendChild(recipeItem2);
+    });
+
+}
+function editRecipe(title) {
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+    let recipe = recipes.find(r => r.title === title);
+
+    if (!recipe) {
+        console.warn(`⚠️ Recipe with title "${title}" not found.`);
+        return;
+    }
+
+    document.getElementById("editTitle").value = recipe.title;
+    document.getElementById("editDescription").value = recipe.description;
+    document.getElementById("editModal").classList.remove("d-none");
+
+    document.getElementById("editModal").dataset.title = title;
+}
+
+function searchRecipeAgain() {
+    let searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+
+    const recipeList = document.getElementById("recipe-list2");
+    recipeList.innerHTML = "";
+
+    let filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchTitle));
+
+    if (filteredRecipes.length === 0) {
+        recipeList.innerHTML = "<p>No matching recipes found.</p>";
+        return;
+    }
+
+    filteredRecipes.forEach((recipe) => {
+        let recipeItem = document.createElement("div");
+        recipeItem.classList.add("recipe-card");
+        recipeItem.innerHTML = `
+            <div class="card">
+                <img src="${recipe.image}" class="card-img-top" alt="">
+            <div class="card-body anchorTag">
+                <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
+            </div>
+                <button class="edit-btn" onclick="editRecipe('${recipe.title}')">Edit</button>
+                <button class="delete-btn" onclick="deleteRecipe('${recipe.title}')">Delete</button>
+            </div>
+        `;
+        recipeList.appendChild(recipeItem);
+    });
+}
+function deleteRecipe(title) {
+    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+    let updatedRecipes = recipes.filter(r => r.title !== title);
+    localStorage.setItem("AllRecipes", JSON.stringify(updatedRecipes));
+    searchRecipeAgain()
 }
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
@@ -322,6 +454,13 @@ function ShowData(filteredRecipes) {
 }
 const searchBar = document.getElementById("searchBar");
 searchBar.addEventListener("keyup", debounce(searchRecipes, 500));
+
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    sessionStorage.removeItem("loggedIn");
+    localStorage.removeItem("user");
+    window.location.href = "startPage.html";
+});
+
 
 getData()
 
