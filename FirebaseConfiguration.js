@@ -185,20 +185,52 @@ loginButton.addEventListener("click", function (event) {
 // continue with Google
 // ----------------------------
 
+// const handleGoogle = async () => {
+//     try {
+//         const provider = new GoogleAuthProvider();
+//         provider.setCustomParameters({ prompt: "select_account" });
+//         const result = await signInWithPopup(auth, provider);
+//         setTimeout(() => {
+//             window.location.href = "./dashboard.html";
+//         }, 1000);
+
+//     } catch (error) {
+//         console.error("Google Sign-In Error:", error.code, error.message);
+//         alert(`Google Sign-In failed:\nError Code: ${error.code}\nMessage: ${error.message}`);
+//     }
+// };
+// document.addEventListener("DOMContentLoaded", () => {
+//     const googleButton1 = document.querySelector("#googleConfigure1");
+//     const googleButton2 = document.querySelector("#googleConfigure2");
+
+//     console.log("Google buttons found:", googleButton1, googleButton2);
+
+//     if (googleButton1) googleButton1.addEventListener("click", () => handleGoogle());
+//     if (googleButton2) googleButton2.addEventListener("click", () => handleGoogle());
+// });
+
 const handleGoogle = async () => {
     try {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: "select_account" });
         const result = await signInWithPopup(auth, provider);
+        
         setTimeout(() => {
             window.location.href = "./dashboard.html";
         }, 1000);
 
     } catch (error) {
         console.error("Google Sign-In Error:", error.code, error.message);
-        alert(`Google Sign-In failed:\nError Code: ${error.code}\nMessage: ${error.message}`);
+        
+        // Display error message in an element instead of alert
+        const errorDisplay = document.getElementById("error-message");
+        if (errorDisplay) {
+            errorDisplay.innerText = `Google Sign-In failed: ${error.message}`;
+            errorDisplay.style.display = "block"; // Show the error message
+        }
     }
 };
+
 document.addEventListener("DOMContentLoaded", () => {
     const googleButton1 = document.querySelector("#googleConfigure1");
     const googleButton2 = document.querySelector("#googleConfigure2");
@@ -208,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (googleButton1) googleButton1.addEventListener("click", () => handleGoogle());
     if (googleButton2) googleButton2.addEventListener("click", () => handleGoogle());
 });
-
 
 // -------------------
 // Continue As Guest
