@@ -447,7 +447,7 @@ searchBar.addEventListener("keyup", debounce(searchRecipes, 500));
 document.getElementById("logoutBtn").addEventListener("click", function () {
     sessionStorage.removeItem("loggedIn");
     localStorage.removeItem("user");
-    window.location.href = "startPage.html";
+    window.location.href = "index.html";
 });
 
 function logActivity(action) {
