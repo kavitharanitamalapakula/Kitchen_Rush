@@ -50,7 +50,7 @@ submit.addEventListener("click", function (event) {
     const password = document.getElementById("password").value;
     const messageBox = document.getElementById("messageBox1");
     function playSound(type) {
-        const filePath = type === "success" ? "audios/success.mp3" : "audios/error.mp3";    
+        const filePath = type === "success" ? "audios/bubble-pop-2-293341.mp3" : "audios/bubble-pop-2-293341.mp3";    
         const audio = new Audio(filePath);
         audio.play().catch(error => console.error("Audio play error:", error));
     }
@@ -66,7 +66,7 @@ submit.addEventListener("click", function (event) {
 
     const fullNamePattern = /^[A-Za-z\s]{8,16}$/;
     const emailPattern = /^[a-z\d]+@(gmail|yahoo|outlook)\.(com|in|org|co)$/;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[$%&#@]).{8,16}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[$%&#@]).{4,10}$/;
 
     if (!fullNamePattern.test(fullName)) {
         showMessage("Please enter a valid full name (8-16 letters only).", "error");
@@ -77,7 +77,7 @@ submit.addEventListener("click", function (event) {
         return;
     }
     if (!passwordPattern.test(password)) {
-        showMessage("Weak password! Use 8+ chars, letters, numbers & symbols.", "error");
+        showMessage("Weak password! Use 4+ chars, letters, numbers & symbols.", "error");
         return;
     }
 

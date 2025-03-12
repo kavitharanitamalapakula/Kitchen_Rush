@@ -14,6 +14,8 @@
     <script type="module" src="./dashboard.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 
 </head>
 
@@ -107,34 +109,28 @@
     </div>
     <div class="profile-container w-50 d-none" id="profile-container">
         <div class="profile-content">
-            <div id="edit-profile" class="content-section d-none">
+            <div id="edit-profile" class="content-section m-auto d-none w-50">
                 <h2>Edit Profile</h2>
-                <form class="profile-form p-3 border rounded bg-light">
-                    <div class="mb-3 text-center">
-                        <label for="profile-pic" class="form-label fw-bold">Profile Picture</label>
-                        <div class="d-flex justify-content-center">
-                            <img id="profile-image-preview" src="https://via.placeholder.com/100"
-                                class="rounded-circle border" width="100" height="100" alt="Profile Picture">
-                        </div>
-                        <input type="file" id="profile-pic" class="form-control mt-2" accept="image/*">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Username</label>
-                        <input type="text" class="form-control" placeholder="Enter your username">
-                    </div>
+                <form id="profile-form" class="profile-form p-3 border rounded bg-light">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Email</label>
-                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <input type="email" id="email" class="form-control" disabled>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Password</label>
-                        <input type="password" class="form-control" placeholder="Enter your password">
+                        <label class="form-label fw-bold">Old Password</label>
+                        <input type="password" id="old-password" class="form-control" placeholder="Enter your old password" required>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">New Password</label>
+                        <input type="password" id="new-password" class="form-control" placeholder="Enter your new password" required>
+                    </div>
+                    <div id="message" style="display: none;"></div>
+                    <audio id="success-sound" src="./audios/bubble-pop-2-293341.mp3"></audio>
+                    <audio id="error-sound" src="./audios/bubble-pop-2-293341.mp3"></audio>
                     <button type="submit" class="btn btn-primary w-100">Save Changes</button>
                 </form>
-
             </div>
-          
+
             <div id="manage-recipes" class="content-section d-none">
                 <h2>Manage Recipes</h2>
                 <input type="text" id="searchTitle" placeholder="Search Recipe by Title">

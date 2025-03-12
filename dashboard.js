@@ -501,7 +501,71 @@ document.querySelectorAll(".tab-btn").forEach(button => {
 window.addEventListener("load", displayActivity);
 
 
+
 getData()
+// ----------------------------------------------------------------------------------------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { getAuth, EmailAuthProvider, reauthenticateWithCredential, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCbu-hr7OqflWwwqVWhGRXrIe4fSbvEuYk",
+    authDomain: "login-d3c9a.firebaseapp.com",
+    projectId: "login-d3c9a",
+    storageBucket: "login-d3c9a.appspot.com",
+    messagingSenderId: "250223725753",
+    appId: "1:250223725753:web:b1874f23cd3032ecd25f68",
+    measurementId: "G-RPYPEEP50P"
+};
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+function showMessage(message, type) {
+    const messageDiv = document.getElementById("message");
+    messageDiv.innerText = message;
+    messageDiv.className = `alert ${type === "success" ? "alert-success" : "alert-danger"} mt-3`;
+    messageDiv.style.display = "block";
+    const audio = new Audio(type === "success" ? "success.mp3" : "error.mp3");
+    audio.play();
+    setTimeout(() => {
+        messageDiv.style.display = "none";
+    }, 3000);
+}
 
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById("email").value = user.email;
+    }
+});
+
+document.getElementById("profile-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const user = auth.currentUser;
+    const oldPassword = document.getElementById("old-password").value;
+    const newPassword = document.getElementById("new-password").value;
+
+    if (!user) {
+        showMessage("No user is logged in.", "error");
+        return;
+    }
+
+    const credential = EmailAuthProvider.credential(user.email, oldPassword);
+
+    try {
+        await reauthenticateWithCredential(user, credential);
+        await updatePassword(user, newPassword);
+        showMessage("Password updated successfully!", "success");
+        document.getElementById("profile-form").reset();
+    } catch (error) {
+        let errorMessage = "An unexpected error occurred. Please try again.";
+
+        if (error.code === "auth/invalid-credential") {
+            errorMessage = "Your old password is incorrect. Please check and try again.";
+        } else if (error.code === "auth/weak-password") {
+            errorMessage = "Your new password is too weak. Try a stronger password.";
+        } else if (error.code === "auth/requires-recent-login") {
+            errorMessage = "Please log in again before changing your password.";
+        }
+        showMessage(errorMessage, "error");
+    }
+});

@@ -299,7 +299,6 @@
                                 <input type="text" class="form-control mb-3" id="fullname" autocomplete="off"
                                     placeholder="User Name" required>
                             </div>
-
                             <div class="form-group text-start">
                                 <label for="email" class="mb-3">Email address</label>
                                 <input type="email" class="form-control mb-3" id="email" autocomplete="off"
@@ -310,12 +309,19 @@
                                 <input type="password" class="form-control mb-3" autocomplete="off" id="password"
                                     placeholder="Password" required>
                             </div>
+                            <div class="text-center">
+                                <p class="m-0 text-danger-emphasis">User Credentials</p>
+                                <ul class="list-unstyled m-0">
+                                    <li>Username: Example (8-16 characters)</li>
+                                    <li>Email: user@gmail.com</li>
+                                    <li>Password: User@123</li>
+                                </ul>
+                            </div>
                             <div id="error-message" style="display: none; color: red;"></div>
                             <div id="messageBox1" class="hidden"></div>
                             <button class="btn btn-primary w-50 mt-3 " type="submit" id="signup">Sign Up</button>
                         </form>
                     </div>
-
                     <!-- Modal Footer -->
                     <div class="modal-footer text-center">
                         <small class="fs-6">Already have an account?<button class="btn btn-secondary ms-3 fs-6"
@@ -342,7 +348,7 @@
             </div>
         </div>
         <audio id="toastSound">
-            <source src="./audios/short-success.mp3" type="audio/mpeg">
+            <source src="./audios/bubble-pop-2-293341.mp3" type="audio/mpeg">
         </audio>
         <script type="module" src="./FirebaseConfiguration.js"></script>
 </body>
