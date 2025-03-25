@@ -445,9 +445,12 @@ const searchBar = document.getElementById("searchBar");
 searchBar.addEventListener("keyup", debounce(searchRecipes, 500));
 
 document.getElementById("logoutBtn").addEventListener("click", function () {
-    sessionStorage.removeItem("loggedIn");
-    localStorage.removeItem("user");
-    window.location.href = "index.html";
+    document.getElementById("logoutLoader").style.display = "flex";
+    setTimeout(() => {
+        sessionStorage.removeItem("loggedIn");
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+    }, 2000);
 });
 
 function logActivity(action) {
@@ -568,4 +571,12 @@ document.getElementById("profile-form").addEventListener("submit", async functio
         }
         showMessage(errorMessage, "error");
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("dashboardLoader").style.display = "flex"; 
+});
+
+window.addEventListener("load", () => {
+    document.getElementById("dashboardLoader").style.display = "none";
 });

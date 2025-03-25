@@ -119,13 +119,6 @@ submit.addEventListener("click", function (event) {
 // SignIn
 // -----------------------
 
-// Define demo credentials
-
-const demoCredentials = {
-    email: "demo@gmail.com",
-    password: "Demo@123",
-};
-
 const loginButton = document.getElementById("SignIn");
 const messageBox = document.getElementById("messageBox2");
 
@@ -219,8 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // -------------------
 // Continue As Guest
 // -------------------
-
-
 document.querySelectorAll("#continueAsGuest1, #continueAsGuest2").forEach((button) => {
     button.addEventListener("click", () => {
         const toastContainer = document.querySelector(".toast-container");
@@ -233,7 +224,7 @@ document.querySelectorAll("#continueAsGuest1, #continueAsGuest2").forEach((butto
         document.getElementById("guestToast").addEventListener("hidden.bs.toast", () => {
             setTimeout(() => {
                 window.location.href = "./dashboard.html";
-            }, 1000);
+            }, 500);
         });
     });
 });
