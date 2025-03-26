@@ -574,9 +574,11 @@ document.getElementById("profile-form").addEventListener("submit", async functio
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("dashboardLoader").style.display = "flex"; 
+    document.getElementById("dashboardLoader").style.display = "flex";
 });
 
 window.addEventListener("load", () => {
-    document.getElementById("dashboardLoader").style.display = "none";
+    setTimeout(() => {
+        document.getElementById("dashboardLoader").style.display = "none";
+    }, 1000);
 });
