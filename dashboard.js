@@ -53,7 +53,7 @@ function displayData(filterProducts = null) {
         let isFav = favoriteRecipes.some(fav => fav.id === obj.id);
 
         item.innerHTML = `
-            <img src="${obj.image}" class="card-img-top" alt="">
+            <img src="${obj.image}" class="card-img-top" style="cursor: pointer" alt="">
             <div class="card-body anchorTag">
                 <p class="card-title" data-id="${obj.id}" style="cursor: pointer;">${obj.title}</p>
             </div>
@@ -74,9 +74,12 @@ function displayData(filterProducts = null) {
             }
             localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
         });
-        item.querySelector(".card-title").addEventListener("click", function () {
+        let navigateToDetails = function () {
             window.location.href = `recipesDetails.html?id=${obj.id}`;
-        });
+        };
+
+        item.querySelector(".card-title").addEventListener("click", navigateToDetails);
+        item.querySelector(".card-img-top").addEventListener("click", navigateToDetails);
         recipeItem.appendChild(item);
     });
 
@@ -454,43 +457,63 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 });
 
 function logActivity(action) {
+    if (action === 'Visited "❌"') return;
+
     let activities = JSON.parse(localStorage.getItem("userActivities")) || [];
     let timestamp = new Date().toLocaleString();
+
     activities = activities.filter(activity => activity.action !== action);
     activities.unshift({ action, timestamp });
+
     localStorage.setItem("userActivities", JSON.stringify(activities));
 }
+
 document.addEventListener("click", function (event) {
     let element = event.target;
     let action = element.innerText.trim() || element.tagName;
 
-    if (action) {
-        logActivity(`Clicked on "${action}"`);
-    }
+    logActivity(`Visited "${action}"`);
+    displayActivity();
 });
+
 function displayActivity() {
     let activities = JSON.parse(localStorage.getItem("userActivities")) || [];
     let activityContainer = document.getElementById("view-activity");
 
     if (!activityContainer) return;
 
+    activityContainer.innerHTML = `<h2>View Activity</h2>`;
+
     if (activities.length === 0) {
-        activityContainer.innerHTML = `
-            <h2>View Activity</h2>
-            <p>No recent activity.</p>
-        `;
+        activityContainer.innerHTML += `<p>No recent activity.</p>`;
         return;
     }
 
     let activityList = activities
-        .map(item => `<li>${item.timestamp} - ${item.action}</li>`)
-        .join("");
+        .map((item, index) => `
+            <div class="activity-card">
+                <p>${item.timestamp} - ${item.action}</p>
+                <button class="delete-btn" data-index="${index}">❌</button>
+            </div>
+        `).join("");
 
-    activityContainer.innerHTML = `
-        <h2>View Activity</h2>
-        <ul>${activityList}</ul>
-    `;
+    activityContainer.innerHTML += activityList;
+
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            let index = this.getAttribute("data-index");
+            deleteActivity(index);
+        });
+    });
 }
+
+function deleteActivity(index) {
+    let activities = JSON.parse(localStorage.getItem("userActivities")) || [];
+    activities.splice(index, 1);
+    localStorage.setItem("userActivities", JSON.stringify(activities));
+    displayActivity();
+}
+
 document.querySelectorAll(".tab-btn").forEach(button => {
     button.addEventListener("click", function () {
         let targetSection = this.getAttribute("data-target");
@@ -501,9 +524,8 @@ document.querySelectorAll(".tab-btn").forEach(button => {
         }
     });
 });
+
 window.addEventListener("load", displayActivity);
-
-
 
 getData()
 // ----------------------------------------------------------------------------------------------------

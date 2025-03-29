@@ -13,6 +13,19 @@ body {
 }
 
 /* header */
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: white; /* Ensure it has a background */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+    margin-top: 80px; /* Adjust based on your header height */
+}
 .menu-item1 {
     display: flex;
     align-items: center;
@@ -68,7 +81,6 @@ body {
     background: white;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .recipe-item {
@@ -592,3 +604,36 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.activity-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.activity-card p {
+    flex: 1; /* Ensures text takes available space */
+    margin: 0;
+    padding: 5px;
+}
+
+.delete-btn {
+    background: transparent;
+    color: black;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: right;
+    min-width: 40px; /* Ensures alignment */
+}
+
+.delete-btn:hover {
+    color: gray;
+}
+
