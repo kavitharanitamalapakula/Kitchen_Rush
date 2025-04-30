@@ -24,7 +24,7 @@ body {
 }
 
 .main-content {
-    margin-top: 80px; /* Adjust based on your header height */
+    margin-top: 80px;
 }
 .menu-item1 {
     display: flex;
@@ -36,7 +36,7 @@ body {
 
 .home-content {
     flex: 1;
-    padding: 20px;
+    padding: 10px;
 }
 
 .search-box {
@@ -56,7 +56,6 @@ body {
 .filters {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
 .filter-btn {

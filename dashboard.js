@@ -278,39 +278,19 @@ document.getElementById("searchRecipe").addEventListener("click", function () {
     });
 });
 
-function searchRecipeAgain() {
-    let searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
+async function deleteRecipe(id) {
     let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
+    let recipe = recipes.find(recipe => recipe.id === id);
 
-    const recipeList = document.getElementById("recipe-list2");
-    recipeList.innerHTML = "";
-
-    let filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchTitle));
-
-    if (filteredRecipes.length === 0) {
-        recipeList.innerHTML = "<p>No matching recipes found.</p>";
+    if (!recipe) {
+        alert("Recipe not found.");
+        return;
+    }
+    if (recipe.category !== "userRecipes") {
+        alert("You can only delete recipes that you created.");
         return;
     }
 
-    filteredRecipes.forEach((recipe) => {
-        let recipeItem = document.createElement("div");
-        recipeItem.classList.add("recipe-card");
-        recipeItem.innerHTML = `
-            <div class="card">
-                <img src="${recipe.image}" class="card-img-top" alt="">
-                <div class="card-body anchorTag">
-                    <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
-                </div>
-                <button class="delete-btn1 mb-3">Delete</button>
-            </div>
-        `;
-        recipeItem.querySelector('.delete-btn1').addEventListener('click', () => deleteRecipe(recipe.id));
-
-        recipeList.appendChild(recipeItem);
-    });
-}
-
-async function deleteRecipe(id) {
     if (!confirm("Are you sure you want to delete this recipe?")) return;
 
     try {
@@ -319,8 +299,6 @@ async function deleteRecipe(id) {
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
-
-        let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
         let updatedRecipes = recipes.filter(recipe => recipe.id !== id);
         localStorage.setItem("AllRecipes", JSON.stringify(updatedRecipes));
 
