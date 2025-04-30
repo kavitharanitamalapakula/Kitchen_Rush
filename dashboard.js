@@ -239,7 +239,6 @@ function toggleForm(formId) {
 
 
 // manage recipe
-
 document.getElementById("searchRecipe").addEventListener("click", function () {
     let searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
     let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
@@ -260,37 +259,24 @@ document.getElementById("searchRecipe").addEventListener("click", function () {
         console.warn("⚠️ No recipes matched the search query.");
         return;
     }
+
     filteredRecipes.forEach((recipe) => {
         let recipeItem = document.createElement("div");
         recipeItem.classList.add("recipe-card");
         recipeItem.innerHTML = `
             <div class="card">
                 <img src="${recipe.image}" class="card-img-top" alt="">
-            <div class="card-body anchorTag">
-                <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
-            </div>
-                <button class="delete-btn mb-3" onclick="deleteRecipe('${recipe.id}')">Delete</button>
+                <div class="card-body anchorTag">
+                    <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
+                </div>
+                <button class="delete-btn1 mb-3">Delete</button>
             </div>
         `;
+        recipeItem.querySelector('.delete-btn1').addEventListener('click', () => deleteRecipe(recipe.id));
+
         recipeList.appendChild(recipeItem);
     });
 });
-
-function editRecipe(title) {
-    let recipes = JSON.parse(localStorage.getItem("AllRecipes")) || [];
-    let recipe = recipes.find(r => r.title === title);
-
-    if (!recipe) {
-        console.warn(`⚠️ Recipe with title "${title}" not found.`);
-        return;
-    }
-
-    document.getElementById("editTitle").value = recipe.title;
-    document.getElementById("editDescription").value = recipe.description;
-    document.getElementById("editModal").classList.remove("d-none");
-
-    document.getElementById("editModal").dataset.title = title;
-}
 
 function searchRecipeAgain() {
     let searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
@@ -312,15 +298,18 @@ function searchRecipeAgain() {
         recipeItem.innerHTML = `
             <div class="card">
                 <img src="${recipe.image}" class="card-img-top" alt="">
-            <div class="card-body anchorTag">
-                <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
-            </div>
-                <button class="delete-btn" onclick="deleteRecipe('${recipe.title}')">Delete</button>
+                <div class="card-body anchorTag">
+                    <p class="card-title" data-id="${recipe.id}" style="cursor: pointer;">${recipe.title}</p>
+                </div>
+                <button class="delete-btn1 mb-3">Delete</button>
             </div>
         `;
+        recipeItem.querySelector('.delete-btn1').addEventListener('click', () => deleteRecipe(recipe.id));
+
         recipeList.appendChild(recipeItem);
     });
 }
+
 async function deleteRecipe(id) {
     if (!confirm("Are you sure you want to delete this recipe?")) return;
 
@@ -342,6 +331,7 @@ async function deleteRecipe(id) {
         alert("Failed to delete recipe. Please try again.");
     }
 }
+
 //-----------------------------------------------------------------------user profile end--------------------------------------------
 // buttons creation
 

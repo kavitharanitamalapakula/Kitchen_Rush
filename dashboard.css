@@ -420,20 +420,12 @@ body {
     margin: 0 auto;
 }
 
-.edit-btn,
-.delete-btn {
-    padding: 8px 12px;
+
+.delete-btn1 {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-}
-
-.edit-btn {
-    width: 50%;
-    margin: auto;
-    margin-bottom: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: white !important;
 }
 
 .delete-btn {
