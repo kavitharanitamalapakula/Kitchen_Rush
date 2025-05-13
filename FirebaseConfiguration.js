@@ -50,15 +50,15 @@ submit.addEventListener("click", function (event) {
     const password = document.getElementById("password").value;
     const messageBox = document.getElementById("messageBox1");
     function playSound(type) {
-        const filePath = type === "success" ? "audios/bubble-pop-2-293341.mp3" : "audios/bubble-pop-2-293341.mp3";    
+        const filePath = type === "success" ? "audios/bubble-pop-2-293341.mp3" : "audios/bubble-pop-2-293341.mp3";
         const audio = new Audio(filePath);
         audio.play().catch(error => console.error("Audio play error:", error));
     }
     function showMessage(message, type) {
         messageBox.innerText = message;
         messageBox.className = type;
-        messageBox.style.display = "block"; 
-        playSound(type); 
+        messageBox.style.display = "block";
+        playSound(type);
         setTimeout(() => {
             messageBox.style.display = "none";
         }, 3000);
@@ -124,7 +124,7 @@ const messageBox = document.getElementById("messageBox2");
 
 function showMessage(message, type) {
     messageBox.textContent = message;
-    messageBox.className = type; 
+    messageBox.className = type;
     messageBox.style.display = "block";
 
     setTimeout(() => {
@@ -149,7 +149,10 @@ loginButton.addEventListener("click", function (event) {
         showMessage("Please enter your password.", "error");
         return;
     }
-
+    const demoCredentials = {
+        email: "user@gmail.com",
+        password: "User@123"
+    };
     if (email === demoCredentials.email && password === demoCredentials.password) {
         showMessage("Login successful with demo credentials!", "success");
         setTimeout(() => (window.location.href = "./dashboard.html"), 1500);
@@ -183,14 +186,14 @@ const handleGoogle = async () => {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: "select_account" });
         const result = await signInWithPopup(auth, provider);
-        
+
         setTimeout(() => {
             window.location.href = "./dashboard.html";
         }, 1000);
 
     } catch (error) {
         console.error("Google Sign-In Error:", error.code, error.message);
-                const errorDisplay = document.getElementById("error-message");
+        const errorDisplay = document.getElementById("error-message");
         if (errorDisplay) {
             errorDisplay.innerText = `Google Sign-In failed: ${error.message}`;
             errorDisplay.style.display = "block";
