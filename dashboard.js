@@ -438,7 +438,7 @@ function logActivity(action) {
 
 document.addEventListener("click", function (event) {
     let element = event.target;
-    let action = element.innerText.trim() || element.tagName;
+    let action = element.innerText || element.tagName;
 
     logActivity(`Visited "${action}"`);
     displayActivity();

@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const googleButton1 = document.querySelector("#googleConfigure1");
     const googleButton2 = document.querySelector("#googleConfigure2");
 
-    console.log("Google buttons found:", googleButton1, googleButton2);
+    // console.log("Google buttons found:", googleButton1, googleButton2);
 
     if (googleButton1) googleButton1.addEventListener("click", () => handleGoogle());
     if (googleButton2) googleButton2.addEventListener("click", () => handleGoogle());
