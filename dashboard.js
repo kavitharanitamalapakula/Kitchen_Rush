@@ -1,4 +1,4 @@
-const url = "https://salty-purple-kryptops.glitch.me/AllRecipes"
+const url = "https://kitchen-rush-json.onrender.com/AllRecipes"
 
 async function getData() {
     try {
